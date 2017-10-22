@@ -1,4 +1,4 @@
-package NFA;
+package nfa;
 
 import java.util.Iterator;
 import java.util.Queue;
@@ -91,12 +91,6 @@ public class ReHandler {
 			return 2;
 		}
 		return 0;
-	}
-
-	public static void main(String args[]) {
-		String re = "ab*(a|b)*";
-		System.out.println(reChange(re));
-
 	}
 
 }
