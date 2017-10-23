@@ -2,8 +2,8 @@ package nfa;
 
 import java.util.ArrayList;
 
-import node.Node;
-import node.NodeController;
+import fa.Node;
+import fa.NodeController;
 
 public class NFA {
 

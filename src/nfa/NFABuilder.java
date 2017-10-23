@@ -2,7 +2,7 @@ package nfa;
 
 import java.util.Stack;
 
-import node.NodeController;
+import fa.NodeController;
 
 public class NFABuilder {
 

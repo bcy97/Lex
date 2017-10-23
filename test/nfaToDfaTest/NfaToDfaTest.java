@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import dfa.DFABulider;
+import fa.Node;
 import nfa.NFA;
 import nfa.NFABuilder;
-import node.Node;
 
 public class NfaToDfaTest {
 

@@ -2,9 +2,9 @@ package dfa;
 
 import java.util.ArrayList;
 
+import fa.Node;
+import fa.NodeController;
 import nfa.NFA;
-import node.Node;
-import node.NodeController;
 
 public class DFABulider {
 	
@@ -15,10 +15,10 @@ public class DFABulider {
 	}
 
 	public DFA dfaBuilder(NFA nfa) {
-		//³õÊ¼»¯arraylis´æ·Ådfa½Úµã
+		//ï¿½ï¿½Ê¼ï¿½ï¿½arraylisï¿½ï¿½ï¿½dfaï¿½Úµï¿½
 		ArrayList<ArrayList<Node>> dfaNodes=new ArrayList<>();
 		
-		//½«nfaµÄstart½ÚµãµÄ±Õ°ü×÷Îª³õÊ¼½Úµã·ÅÈë
+		//ï¿½ï¿½nfaï¿½ï¿½startï¿½Úµï¿½Ä±Õ°ï¿½ï¿½ï¿½Îªï¿½ï¿½Ê¼ï¿½Úµï¿½ï¿½ï¿½ï¿½
 		ArrayList<Node> start=new ArrayList<>();
 		start.add(nfa.getStart());
 		dfaNodes.add(find_E_Closure(start));
@@ -27,11 +27,11 @@ public class DFABulider {
 	}
 	
 	public ArrayList<Node> find_E_Closure(ArrayList<Node> nodes) {
-		//Èç¹û»¹ÓÐÐÂµÄ¦Å±ß£¬¼ÌÐøÑ­»·
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÂµÄ¦Å±ß£ï¿½ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½
 		while (!hasAll(nodes)) {
-			//ÐÂarraylist ×°ÈëÐÂµÄ±ß
+			//ï¿½ï¿½arraylist ×°ï¿½ï¿½ï¿½ÂµÄ±ï¿½
 			ArrayList<Node> temp =new ArrayList<>();
-			//±éÀúÏÖÓÐÁÐ±í£¬Èç¹ûÁÐ±íÖÐ½Úµã´æÔÚ¦Å±ß£¬¼ÓÈëÐÂ½Úµã
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½Ð½Úµï¿½ï¿½ï¿½Ú¦Å±ß£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â½Úµï¿½
 			for (Node node : nodes) {
 				if (node.getEdge1()=='e'&&!nodes.contains(node.getNext1())&&!temp.contains(node.getNext1())) {
 					temp.add(node.getNext1());
@@ -49,7 +49,7 @@ public class DFABulider {
 		
 		ArrayList<Node> newNode=new ArrayList<>();
 		for (Node node : nodes) {
-			//ÒòÎªedge2 Ö»ÄÜÎª¦Å£¬ËùÒÔÖ»Ðè·ÃÎÊedge1
+			//ï¿½ï¿½Îªedge2 Ö»ï¿½ï¿½Îªï¿½Å£ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½edge1
 			if (node.getEdge1()==edge&&!newNode.contains(node.getNext1())) {
 				newNode.add(node.getNext1());
 			}
