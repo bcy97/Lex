@@ -8,7 +8,7 @@ public class ReHandler {
 
 	public static String reChange(String re) {
 		Stack<Character> stack = new Stack<>();
-		char[] reNew = new char[re.length()];
+		char[] reNew = new char[re.length()*2];
 		int index = 0;
 
 		for (int i = 0; i < re.length(); i++) {

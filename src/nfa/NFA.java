@@ -1,9 +1,12 @@
 package nfa;
 
+import java.util.ArrayList;
+
 public class NFA {
 
-	public Node start;
-	public Node end;
+	private Node start;
+	private Node end;
+	private ArrayList<Node> nodes = new ArrayList<>();
 
 	public NFA(char c, NodeController controller) {
 
@@ -12,6 +15,9 @@ public class NFA {
 
 		start.setEdge1(c);
 		start.setNext1(end);
+		
+		nodes.add(start);
+		nodes.add(end);
 
 	}
 
@@ -22,6 +28,10 @@ public class NFA {
 			return;
 		}
 
+		for (Node node : nfa.getNodes()) {
+			nodes.add(node);
+		}
+		
 		end.setNext('e', nfa.start);
 
 		this.end = nfa.end;
@@ -32,6 +42,9 @@ public class NFA {
 
 		Node newStart = controller.CreateNode();
 		Node newEnd = controller.CreateNode();
+		
+		nodes.add(newStart);
+		nodes.add(newEnd);
 
 		end.setNext('e', newEnd);
 		end.setNext('e', start);
@@ -48,6 +61,9 @@ public class NFA {
 
 		Node newStart = controller.CreateNode();
 		Node newEnd = controller.CreateNode();
+		
+		nodes.add(newStart);
+		nodes.add(newEnd);
 
 		newStart.setNext('e', this.start);
 		newStart.setNext('e', nfa.start);
@@ -57,6 +73,30 @@ public class NFA {
 
 		this.start = newStart;
 		this.end = newEnd;
+	}
+
+	public ArrayList<Node> getNodes() {
+		return nodes;
+	}
+
+	public void setNodes(ArrayList<Node> nodes) {
+		this.nodes = nodes;
+	}
+
+	public Node getStart() {
+		return start;
+	}
+
+	public void setStart(Node start) {
+		this.start = start;
+	}
+
+	public Node getEnd() {
+		return end;
+	}
+
+	public void setEnd(Node end) {
+		this.end = end;
 	}
 
 }

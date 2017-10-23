@@ -12,6 +12,43 @@ public class Node {
 	private char edge1;
 	private char edge2;
 
+	public Node(int id) {
+		this.nodeID = id;
+	}
+
+	public void setNext(char edge, Node next) {
+
+		if (next != null && next1 == null) {
+			this.next1 = next;
+			this.edge1 = edge;
+		} else if (next1 != null&&next2==null) {
+			this.next2 = next;
+			this.edge2 = edge;
+		}
+	}
+
+	public ArrayList<Node> getNextAll() {
+
+		ArrayList<Node> nexts = new ArrayList<>();
+
+		if (next1 != null) {
+			nexts.add(next1);
+		}
+
+		if (next2 != null) {
+			nexts.add(next2);
+		}
+
+		return nexts;
+	}
+	
+	public boolean equals(Node node) {
+		if (this.nodeID==node.getNodeID()) {
+			return true;
+		}
+		return false;
+	}
+	
 	public int getNodeID() {
 		return nodeID;
 	}
@@ -50,35 +87,5 @@ public class Node {
 
 	public void setEdge2(char edge2) {
 		this.edge2 = edge2;
-	}
-
-	public Node(int id) {
-		this.nodeID = id;
-	}
-
-	public void setNext(char edge, Node next) {
-
-		if (next != null && next1 == null) {
-			this.next1 = next;
-			this.edge1 = edge;
-		} else if (next1 != null&&next2==null) {
-			this.next2 = next;
-			this.edge2 = edge;
-		}
-	}
-
-	public ArrayList<Node> getNextAll() {
-
-		ArrayList<Node> nexts = new ArrayList<>();
-
-		if (next1 != null) {
-			nexts.add(next1);
-		}
-
-		if (next2 != null) {
-			nexts.add(next2);
-		}
-
-		return nexts;
 	}
 }

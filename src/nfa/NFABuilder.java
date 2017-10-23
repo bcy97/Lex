@@ -1,5 +1,7 @@
 package nfa;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Stack;
 
 public class NFABuilder {
@@ -66,42 +68,24 @@ public class NFABuilder {
 		return nfaStack.pop();
 	}
 	
-//	public static void main(String[] args) {
-//		NFABuilder builder= new NFABuilder();
-//		
-//		String re= "ab*(a|b)*";
-//		
-//		NFA nfa=builder.createNFA(re);
-//		Node start =nfa.start;
-//		print(start);
-//	}
-//	
-//	public static void print(Node start){
-//		if (start.getNextAll()==null) {
-//			return ;
-//		}else {
-//			if (start.getNext1()!=null) {
-//				System.out.println(start.getNodeID()+"-"+start.getEdge1()+"->"+start.getNext1().getNodeID());
-//			}
-//			if (start.getNext2()!=null) {
-//				System.out.println(start.getNodeID()+"-"+start.getEdge2()+"->"+start.getNext2().getNodeID());
-//			}
-//			if (start.getNext1()!=null&&start.getNext2()!=null) {
-//				if (start.getNext1()==start.getNext2()) {
-//					print(start.getNext1());
-//				}else {
-//					print(start.getNext1());
-//					print(start.getNext2());
-//				}
-//			}else {
-//				if (start.getNext1() != null) {
-//					print(start.getNext1());
-//				}
-//				if (start.getNext2() != null) {
-//					print(start.getNext2());
-//				}
-//			}
-//			
-//		}
-//	}
+	public static void main(String[] args) {
+		NFABuilder builder= new NFABuilder();
+		
+		String re= "ab*(a|b)*";
+		
+		NFA nfa=builder.createNFA(re);
+		print(nfa);
+	}
+	
+	public static void print(NFA nfa){
+		ArrayList<Node> nodes=nfa.getNodes();
+		for (Node node : nodes) {
+			if (node.getNext1()!=null) {
+				System.out.println(node.getNodeID()+"-"+node.getEdge1()+"->"+node.getNext1().getNodeID());
+			}
+			if (node.getNext2()!=null) {
+				System.out.println(node.getNodeID()+"-"+node.getEdge2()+"->"+node.getNext2().getNodeID());
+			}
+		}
+	}
 }
