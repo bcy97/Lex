@@ -1,4 +1,4 @@
-package nfaToDfa;
+package dfa;
 
 public class DFA {
 

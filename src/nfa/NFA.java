@@ -2,6 +2,9 @@ package nfa;
 
 import java.util.ArrayList;
 
+import node.Node;
+import node.NodeController;
+
 public class NFA {
 
 	private Node start;

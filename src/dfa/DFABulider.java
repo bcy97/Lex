@@ -1,13 +1,28 @@
-package nfaToDfa;
+package dfa;
 
 import java.util.ArrayList;
 
 import nfa.NFA;
-import nfa.Node;
+import node.Node;
+import node.NodeController;
 
-public class NfaToDfa {
+public class DFABulider {
+	
+	NodeController nodeController;
+	
+	public DFABulider() {
+		nodeController=new NodeController();
+	}
 
 	public DFA dfaBuilder(NFA nfa) {
+		//初始化arraylis存放dfa节点
+		ArrayList<ArrayList<Node>> dfaNodes=new ArrayList<>();
+		
+		//将nfa的start节点的闭包作为初始节点放入
+		ArrayList<Node> start=new ArrayList<>();
+		start.add(nfa.getStart());
+		dfaNodes.add(find_E_Closure(start));
+		
 		return null;
 	}
 	

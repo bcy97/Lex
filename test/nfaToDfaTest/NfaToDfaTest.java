@@ -3,10 +3,10 @@ package nfaToDfaTest;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import dfa.DFABulider;
 import nfa.NFA;
 import nfa.NFABuilder;
-import nfa.Node;
-import nfaToDfa.NfaToDfa;
+import node.Node;
 
 public class NfaToDfaTest {
 
@@ -21,7 +21,7 @@ public class NfaToDfaTest {
 
 		NFA nfa = nfaBuilder.createNFA(re);
 
-		NfaToDfa transfer = new NfaToDfa();
+		DFABulider transfer = new DFABulider();
 
 		ArrayList<Node> start = new ArrayList<>();
 		start.add(nfa.getStart());

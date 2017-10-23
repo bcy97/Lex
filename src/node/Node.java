@@ -1,4 +1,4 @@
-package nfa;
+package node;
 
 import java.util.ArrayList;
 

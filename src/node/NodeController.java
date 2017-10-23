@@ -1,4 +1,4 @@
-package nfa;
+package node;
 
 public class NodeController {
 
