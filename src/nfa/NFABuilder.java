@@ -1,6 +1,7 @@
 package nfa;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class NFABuilder {
@@ -29,8 +30,8 @@ public class NFABuilder {
 				try {
 					first = nfaStack.pop();
 					second = nfaStack.pop();
-					first.join(second);
-					nfaStack.push(first);
+					second.join(first);
+					nfaStack.push(second);
 					
 				} catch (Exception e) {
 					System.out.println("there are not two nfa in the stack");
@@ -43,7 +44,6 @@ public class NFABuilder {
 					nfa.closure(controller);
 					nfaStack.push(nfa);
 					
-					nfaStack.push(nfa);
 					
 				} catch (Exception e) {
 					System.out.println("there are not two nfa in the stack");
@@ -68,19 +68,42 @@ public class NFABuilder {
 		return nfaStack.pop();
 	}
 	
-	public static void main(String[] args) {
-		NFABuilder builder= new NFABuilder();
-		
-		String re= "ab*(a|b)*";
-		
-		NFA nfa=builder.createNFA(re);
-		Node start =nfa.start;
-		while(start.getNext1()!=null){
-			System.out.println(start.getNodeID()+"-"+start.getEdge1()+"->"+start.getNext1().getNodeID());
-			if (start.getNext2()!=null) {
-				System.out.println(start.getNodeID()+"-"+start.getEdge2()+"->"+start.getNext2().getNodeID());
-			}
-			start=start.getNext1();
-		}
-	}
+//	public static void main(String[] args) {
+//		NFABuilder builder= new NFABuilder();
+//		
+//		String re= "ab*(a|b)*";
+//		
+//		NFA nfa=builder.createNFA(re);
+//		Node start =nfa.start;
+//		print(start);
+//	}
+//	
+//	public static void print(Node start){
+//		if (start.getNextAll()==null) {
+//			return ;
+//		}else {
+//			if (start.getNext1()!=null) {
+//				System.out.println(start.getNodeID()+"-"+start.getEdge1()+"->"+start.getNext1().getNodeID());
+//			}
+//			if (start.getNext2()!=null) {
+//				System.out.println(start.getNodeID()+"-"+start.getEdge2()+"->"+start.getNext2().getNodeID());
+//			}
+//			if (start.getNext1()!=null&&start.getNext2()!=null) {
+//				if (start.getNext1()==start.getNext2()) {
+//					print(start.getNext1());
+//				}else {
+//					print(start.getNext1());
+//					print(start.getNext2());
+//				}
+//			}else {
+//				if (start.getNext1() != null) {
+//					print(start.getNext1());
+//				}
+//				if (start.getNext2() != null) {
+//					print(start.getNext2());
+//				}
+//			}
+//			
+//		}
+//	}
 }

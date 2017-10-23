@@ -58,10 +58,10 @@ public class Node {
 
 	public void setNext(char edge, Node next) {
 
-		if (next != null && next1 != null) {
+		if (next != null && next1 == null) {
 			this.next1 = next;
 			this.edge1 = edge;
-		} else if (next1 != null) {
+		} else if (next1 != null&&next2==null) {
 			this.next2 = next;
 			this.edge2 = edge;
 		}

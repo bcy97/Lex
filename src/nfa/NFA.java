@@ -38,7 +38,7 @@ public class NFA {
 
 		newStart.setNext('e', start);
 
-		newEnd.setNext('e', newStart);
+		newStart.setNext('e', newEnd);
 
 		this.start = newStart;
 		this.end = newEnd;
@@ -52,8 +52,8 @@ public class NFA {
 		newStart.setNext('e', this.start);
 		newStart.setNext('e', nfa.start);
 
-		newEnd.setNext('e', this.end);
-		newEnd.setNext('e', nfa.end);
+		this.end.setNext('e', newEnd);
+		nfa.end.setNext('e', newEnd);
 
 		this.start = newStart;
 		this.end = newEnd;
