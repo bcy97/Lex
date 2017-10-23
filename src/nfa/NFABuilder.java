@@ -1,7 +1,5 @@
 package nfa;
 
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Stack;
 
 public class NFABuilder {
