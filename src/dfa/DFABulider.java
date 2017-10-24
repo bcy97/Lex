@@ -3,47 +3,126 @@ package dfa;
 import java.util.ArrayList;
 
 import fa.Node;
-import fa.NodeController;
 import nfa.NFA;
 
 public class DFABulider {
 
-	NodeController nodeController;
-
 	public DFABulider() {
-		nodeController = new NodeController();
 	}
 
 	public DFA createDFA(NFA nfa) {
-		ArrayList<ArrayList<Node>> dfaNodes = new ArrayList<>();
+
+		// 两个arraylist存放节点
+		ArrayList<DFANode> dfaNodes = new ArrayList<>();
+		ArrayList<DFANode> dfaNodeNotVisited = new ArrayList<>();
+
+		// 两个arraylist 存放节点代表的nfa闭包
+		ArrayList<ArrayList<Node>> nodeVisited = new ArrayList<>();
 		ArrayList<ArrayList<Node>> nodeNotVisited = new ArrayList<>();
 
-		ArrayList<Node> start = new ArrayList<>();
-		start.add(nfa.getStart());
-		dfaNodes.add(find_E_Closure(start));
-		nodeNotVisited.add(find_E_Closure(start));
+		// 获取初始的闭包
+		Node start = nfa.getStart();
+		ArrayList<Node> startNodes = new ArrayList<>();
+		startNodes.add(start);
+		startNodes = find_E_Closure(startNodes);
+		// 获取初始的闭包节点
+		DFANode node = new DFANode(0, startNodes);
 
+		// 将初始节点放入待访问节点
+		dfaNodeNotVisited.add(node);
+		// 将初始闭包放入待访问闭包数组
+		nodeNotVisited.add(startNodes);
+
+		// 如果有未访问的节点，继续循环
 		while (!nodeNotVisited.isEmpty()) {
-			ArrayList<Node> nodes = nodeNotVisited.get(nodeNotVisited.size() - 1);
-			Node node=nodeController.CreateNode();
-			
-			ArrayList<Node> nodes_a_edge=find_E_Closure(find_next(nodes, 'a'));
-			if (nodes_a_edge!=null&&!dfaNodes.contains(nodes_a_edge)&&!nodeNotVisited.contains(nodes_a_edge)) {
-				Node node_a_next=nodeController.CreateNode();
-				node.setNext('a', node_a_next);
-				nodeNotVisited.add(nodes_a_edge);
+			// 获取第一个未访问节点
+			DFANode dfaNode = dfaNodeNotVisited.get(0);
+
+			// 获取第一个未访问节点对应的闭包
+			ArrayList<Node> nfaNodes = nodeNotVisited.get(0);
+
+			// 寻找当前闭包对应的a边的闭包
+			ArrayList<Node> next_a_closure = find_E_Closure(find_next(nfaNodes, 'a'));
+			DFANode next_a = null;
+			if (!next_a_closure.isEmpty()) {
+				next_a = new DFANode(0, next_a_closure);
 			}
-			
-			ArrayList<Node> nodes_b_edge=find_E_Closure(find_next(nodes, 'b'));
-			if (nodes_b_edge!=null&&!dfaNodes.contains(nodes_b_edge)&&!nodeNotVisited.contains(nodes_b_edge)) {
-				Node node_b_next=nodeController.CreateNode();
-				node.setNext('b', node_b_next);
-				nodeNotVisited.add(nodes_b_edge);
+
+			// 寻找当前闭包对应的b边的闭包
+			ArrayList<Node> next_b_closure = find_E_Closure(find_next(nfaNodes, 'b'));
+			DFANode next_b = null;
+			if (!next_b_closure.isEmpty()) {
+				next_b = new DFANode(0, next_b_closure);
 			}
-			
+
+			if (next_a != null && next_a_closure.equals(nfaNodes)) {
+				dfaNode.setNext('a', dfaNode);
+			} else if (next_a != null && !nodeVisited.contains(next_a_closure)
+					&& !nodeNotVisited.contains(next_a_closure)) {
+
+				dfaNode.setNext('a', next_a);
+
+				// 将新节点添加入待访问
+				dfaNodeNotVisited.add(next_a);
+				nodeNotVisited.add(next_a_closure);
+
+			} else if (next_a != null && !nodeVisited.contains(next_a_closure)
+					&& nodeNotVisited.contains(next_a_closure)) {
+
+				dfaNode.setNext('a', dfaNodeNotVisited.get(nodeNotVisited.indexOf(next_a_closure)));
+
+			} else if (next_a != null && nodeVisited.contains(next_a_closure)
+					&& !nodeNotVisited.contains(next_a_closure)) {
+
+				dfaNode.setNext('a', dfaNodes.get(nodeVisited.indexOf(next_a_closure)));
+
+			}
+
+			if (next_b != null && next_b_closure.equals(nfaNodes)) {
+				dfaNode.setNext('b', dfaNode);
+			} else if (next_b != null && !nodeVisited.contains(next_b_closure) && !nodeNotVisited.contains(next_b_closure)) {
+
+				dfaNode.setNext('b', next_b);
+				dfaNodeNotVisited.add(next_b);
+				nodeNotVisited.add(next_b_closure);
+
+			} else if (next_b != null && !nodeVisited.contains(next_b_closure)
+					&& nodeNotVisited.contains(next_b_closure)) {
+
+				dfaNode.setNext('b', dfaNodeNotVisited.get(nodeNotVisited.indexOf(next_b_closure)));
+
+			} else if (next_b != null && nodeVisited.contains(next_b_closure)
+					&& !nodeNotVisited.contains(next_b_closure)) {
+
+				dfaNode.setNext('b', dfaNodes.get(nodeVisited.indexOf(next_b_closure)));
+
+			}
+
+			// 已经访问的加入以访问，从未访问中移除
+			dfaNodes.add(dfaNode);
+			dfaNodeNotVisited.remove(dfaNode);
+
+			// 已经访问的加入以访问，从未访问中移除
+			nodeVisited.add(nfaNodes);
+			nodeNotVisited.remove(nfaNodes);
+
 		}
 
-		return null;
+		ArrayList<DFANode> startDFANodes = new ArrayList<>();
+		ArrayList<DFANode> endDFANodes = new ArrayList<>();
+
+		for (DFANode dfaNode2 : dfaNodes) {
+			if (dfaNode2.getNfaNodes().contains(nfa.getEnd())) {
+				endDFANodes.add(dfaNode2);
+			} else {
+				startDFANodes.add(dfaNode2);
+			}
+		}
+
+		DFA dfa = new DFA(startDFANodes, endDFANodes);
+
+		return dfa;
+
 	}
 
 	public ArrayList<Node> find_E_Closure(ArrayList<Node> nodes) {

@@ -2,50 +2,30 @@ package dfa;
 
 import java.util.ArrayList;
 
-import fa.Node;
-import fa.NodeController;
-import nfa.NFA;
-
 public class DFA {
-
-	private Node start;
-	private Node end;
-	private ArrayList<Node> nodes = new ArrayList<>();
-
-	public DFA(char c, NodeController controller) {
-
-		start = controller.CreateNode();
-		end = controller.CreateNode();
-
-		start.setEdge1(c);
-		start.setNext1(end);
-		
-		nodes.add(start);
-		nodes.add(end);
-
+	
+	private ArrayList<DFANode> startNodes;
+	private ArrayList<DFANode> endNodes;
+	
+	public DFA(ArrayList<DFANode> startNodes,ArrayList<DFANode> endNodes) {
+		this.startNodes=startNodes;
+		this.endNodes=endNodes;
 	}
 
-	public ArrayList<Node> getNodes() {
-		return nodes;
+	public ArrayList<DFANode> getStartNodes() {
+		return startNodes;
 	}
 
-	public void setNodes(ArrayList<Node> nodes) {
-		this.nodes = nodes;
+	public void setStartNodes(ArrayList<DFANode> startNodes) {
+		this.startNodes = startNodes;
 	}
 
-	public Node getStart() {
-		return start;
+	public ArrayList<DFANode> getEndNodes() {
+		return endNodes;
 	}
 
-	public void setStart(Node start) {
-		this.start = start;
+	public void setEndNodes(ArrayList<DFANode> endNodes) {
+		this.endNodes = endNodes;
 	}
-
-	public Node getEnd() {
-		return end;
-	}
-
-	public void setEnd(Node end) {
-		this.end = end;
-	}
+	
 }

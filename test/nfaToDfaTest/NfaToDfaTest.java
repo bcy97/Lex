@@ -3,7 +3,9 @@ package nfaToDfaTest;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import dfa.DFA;
 import dfa.DFABulider;
+import dfa.DFANode;
 import fa.Node;
 import nfa.NFA;
 import nfa.NFABuilder;
@@ -21,19 +23,40 @@ public class NfaToDfaTest {
 
 		NFA nfa = nfaBuilder.createNFA(re);
 
-		DFABulider transfer = new DFABulider();
+		DFABulider bulider = new DFABulider();
 
-		ArrayList<Node> start = new ArrayList<>();
-		start.add(nfa.getStart());
-//		start.add(nfa.getStart().getNext1().getNext1());
-		// start.add(nfa.getStart().getNext1().getNext1());
-		// start.add(nfa.getStart().getNext1().getNext1());
-		ArrayList<Node> result = transfer.find_E_Closure(start);
+		DFA dfa = bulider.createDFA(nfa);
+		
+		ArrayList<DFANode> startnode=dfa.getEndNodes();
+		System.out.println(startnode.size());
+		for (DFANode dfaNode : startnode) {
+			for (Node node : dfaNode.getNfaNodes()) {
+				System.out.print(node.getNodeID()+" ");
+			}
+			System.out.println();
+		}
 
-//		for (Node node : result) {
-//			System.out.println(node.getNodeID());
-//		}
-		System.out.println(result==start);
-
+		// ArrayList<DFANode> nodes=new ArrayList<>();
+		//
+		// ArrayList<Node> I0_closure=new ArrayList<>();
+		// I0_closure.add(nfa.getStart());
+		// DFANode I0=new DFANode(0, I0_closure);
+		// nodes.add(I0);
+		//
+		// ArrayList<Node>
+		// I1_closure=bulider.find_E_Closure(bulider.find_next(I0_closure, 'a'));
+		// DFANode I1=new DFANode(0, I1_closure);
+		// nodes.add(I1);
+		//
+		// ArrayList<Node>
+		// I2_closure=bulider.find_E_Closure(bulider.find_next(I1_closure, 'b'));
+		// DFANode I2=new DFANode(0, I2_closure);
+		// nodes.add(I2);
+		//
+		// ArrayList<Node>
+		// test_closure=bulider.find_E_Closure(bulider.find_next(I2_closure, 'b'));
+		// DFANode test=new DFANode(0, test_closure);
+		//
+		// System.out.println(nodes.contains(test));
 	}
 }
