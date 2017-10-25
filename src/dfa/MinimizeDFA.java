@@ -1,9 +1,6 @@
 package dfa;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 public class MinimizeDFA {
 
@@ -17,13 +14,25 @@ public class MinimizeDFA {
 		allNodes.add(starts);
 		allNodes.add(end);
 
-		while (canDivided(allNodes,dfa.getAlphabet())) {
+		// 能继续划分，循环继续
+		while (canDivided(allNodes, dfa.getAlphabet())) {
 
 			for (char c : dfa.getAlphabet()) {
-				allNodes=divideByEdge(allNodes, c);
+				allNodes = divideByEdge(allNodes, c);
 			}
 
 		}
+
+		// 初始化dfa0Nodes
+		ArrayList<DFANode> dfa0Nodes = new ArrayList<>();
+		for (int i = 0; i < allNodes.size(); i++) {
+			DFANode node = new DFANode(i, null);
+			dfa0Nodes.add(node);
+		}
+		
+		
+		
+		
 
 		for (ArrayList<DFANode> arrayList : allNodes) {
 			for (DFANode dfaNode : arrayList) {
@@ -35,7 +44,7 @@ public class MinimizeDFA {
 		return null;
 	}
 
-	public boolean canDivided(ArrayList<ArrayList<DFANode>> dfaLists,ArrayList<Character> alphabet) {
+	public boolean canDivided(ArrayList<ArrayList<DFANode>> dfaLists, ArrayList<Character> alphabet) {
 
 		// 遍历每一个dfa0
 		for (ArrayList<DFANode> dfaList : dfaLists) {
@@ -44,7 +53,6 @@ public class MinimizeDFA {
 			if (dfaList.size() == 1) {
 				continue;
 			}
-
 
 			// 如果有不止一个元素，开始遍历
 			for (DFANode dfaNode : dfaList) {
@@ -121,7 +129,7 @@ public class MinimizeDFA {
 			}
 			kindNum += newKindNum;
 		}
-		
+
 		return temp;
 	}
 
