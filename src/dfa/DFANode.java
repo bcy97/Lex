@@ -13,22 +13,23 @@ public class DFANode extends Node {
 		this.nfaNodes = nfaNodes;
 	}
 
-	public boolean equals(DFANode dfaNode) {
-		if (this.nfaNodes.equals(dfaNode.getNfaNodes())) {
+	@Override
+	public boolean equals(Object dfaNode) {
+		if (dfaNode instanceof DFANode&&this.nfaNodes.equals(((DFANode)dfaNode).getNfaNodes())) {
 			return true;
 		}
 		return false;
 	}
 
-	public ArrayList<DFANode> getNexts() {
-		ArrayList<DFANode> dfaNodes = new ArrayList<>();
-		if (this.getNext1() != null) {
-			dfaNodes.add((DFANode) this.getNext1());
+	public ArrayList<DFANode> getNextDFA(char edge) {
+		ArrayList<DFANode> nexts = new ArrayList<>();
+		if (this.getEdge1()==edge&&this.getNext1()!=null) {
+			nexts.add((DFANode)this.getNext1());
 		}
-		if (this.getNext2() != null) {
-			dfaNodes.add((DFANode) this.getNext2());
+		if (this.getEdge2()==edge&&this.getNext2()!=null) {
+			nexts.add((DFANode)this.getNext2());
 		}
-		return dfaNodes;
+		return nexts;
 	}
 
 	public ArrayList<Node> getNfaNodes() {

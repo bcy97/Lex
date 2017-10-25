@@ -18,70 +18,71 @@ public class NfaToDfaTest {
 
 	public static void NfaToDfaTest() {
 		
-		String re = "(ab*a)*(a|b)*";
+		String re = "((ba*)*a)*(a|b)";
 
 		NFABuilder nfaBuilder = new NFABuilder();
 
 		NFA nfa = nfaBuilder.createNFA(re);
-nfa.print();
+//nfa.print();
 		DFABulider bulider = new DFABulider();
 
 		DFA dfa = bulider.createDFA(nfa);
-		
-		//检测nfa初始和末状态
-		ArrayList<DFANode> startnode=dfa.getStartNodes();
-		System.out.println("startnode number:"+startnode.size());
-		for (DFANode dfaNode : startnode) {
-			for (Node node : dfaNode.getNfaNodes()) {
-				System.out.print(node.getNodeID()+" ");
-			}
-			System.out.print("             ");
-			if (dfaNode.getNext1()!=null) {
-				System.out.print(dfaNode.getNodeID()+"-"+dfaNode.getEdge1()+"->"+dfaNode.getNext1().getNodeID());
-			}
-			if (dfaNode.getNext2()!=null) {
-				System.out.print(dfaNode.getNodeID()+"-"+dfaNode.getEdge2()+"->"+dfaNode.getNext2().getNodeID());
-			}
-			System.out.println();
-		}
-		ArrayList<DFANode> endNode=dfa.getEndNodes();
-		System.out.println("endnode number:"+endNode.size());
-		for (DFANode dfaNode : endNode) {
-			for (Node node : dfaNode.getNfaNodes()) {
-				System.out.print(node.getNodeID()+" ");
-			}
-			System.out.print("             ");
-			if (dfaNode.getNext1()!=null) {
-				System.out.print(dfaNode.getNodeID()+"-"+dfaNode.getEdge1()+"->"+dfaNode.getNext1().getNodeID());
-			}
-			System.out.print("   ");
-			if (dfaNode.getNext2()!=null) {
-				System.out.print(dfaNode.getNodeID()+"-"+dfaNode.getEdge2()+"->"+dfaNode.getNext2().getNodeID());
-			}
-			System.out.println();
-		}
+//		
+//		//检测nfa初始和末状态
+//		ArrayList<DFANode> startnode=dfa.getStartNodes();
+//		System.out.println("startnode number:"+startnode.size());
+//		for (DFANode dfaNode : startnode) {
+//			for (Node node : dfaNode.getNfaNodes()) {
+//				System.out.print(node.getNodeID()+" ");
+//			}
+//			System.out.print("             ");
+//			if (dfaNode.getNext1()!=null) {
+//				System.out.print(dfaNode.getNodeID()+"-"+dfaNode.getEdge1()+"->"+dfaNode.getNext1().getNodeID()+"   ");
+//			}
+//			if (dfaNode.getNext2()!=null) {
+//				System.out.print(dfaNode.getNodeID()+"-"+dfaNode.getEdge2()+"->"+dfaNode.getNext2().getNodeID());
+//			}
+//			System.out.println();
+//		}
+//		ArrayList<DFANode> endNode=dfa.getEndNodes();
+//		System.out.println("endnode number:"+endNode.size());
+//		for (DFANode dfaNode : endNode) {
+//			for (Node node : dfaNode.getNfaNodes()) {
+//				System.out.print(node.getNodeID()+" ");
+//			}
+//			System.out.print("             ");
+//			if (dfaNode.getNext1()!=null) {
+//				System.out.print(dfaNode.getNodeID()+"-"+dfaNode.getEdge1()+"->"+dfaNode.getNext1().getNodeID());
+//			}
+//			System.out.print("   ");
+//			if (dfaNode.getNext2()!=null) {
+//				System.out.print(dfaNode.getNodeID()+"-"+dfaNode.getEdge2()+"->"+dfaNode.getNext2().getNodeID());
+//			}
+//			System.out.println();
+//		}
 
-		// ArrayList<DFANode> nodes=new ArrayList<>();
-		//
-		// ArrayList<Node> I0_closure=new ArrayList<>();
-		// I0_closure.add(nfa.getStart());
-		// DFANode I0=new DFANode(0, I0_closure);
-		// nodes.add(I0);
-		//
-		// ArrayList<Node>
-		// I1_closure=bulider.find_E_Closure(bulider.find_next(I0_closure, 'a'));
-		// DFANode I1=new DFANode(0, I1_closure);
-		// nodes.add(I1);
-		//
-		// ArrayList<Node>
-		// I2_closure=bulider.find_E_Closure(bulider.find_next(I1_closure, 'b'));
-		// DFANode I2=new DFANode(0, I2_closure);
-		// nodes.add(I2);
-		//
-		// ArrayList<Node>
-		// test_closure=bulider.find_E_Closure(bulider.find_next(I2_closure, 'b'));
-		// DFANode test=new DFANode(0, test_closure);
-		//
-		// System.out.println(nodes.contains(test));
+//		 ArrayList<DFANode> nodes=new ArrayList<>();
+//		
+//		 ArrayList<Node> I0_closure=new ArrayList<>();
+//		 I0_closure.add(nfa.getStart());
+//		 DFANode I0=new DFANode(0, I0_closure);
+//		 nodes.add(I0);
+//		
+//		 ArrayList<Node>
+//		 I1_closure=bulider.find_E_Closure(bulider.find_next(I0_closure, 'a'));
+//		 DFANode I1=new DFANode(0, I1_closure);
+//		 nodes.add(I1);
+//		
+//		 ArrayList<Node>
+//		 I2_closure=bulider.find_E_Closure(bulider.find_next(I1_closure, 'b'));
+//		 DFANode I2=new DFANode(0, I2_closure);
+//		 nodes.add(I2);
+//		
+//		 ArrayList<Node>
+//		 test_closure=bulider.find_E_Closure(bulider.find_next(I2_closure, 'b'));
+//		 DFANode test=new DFANode(0, test_closure);
+//		
+//		 System.out.println(nodes.contains(test));
+		
 	}
 }

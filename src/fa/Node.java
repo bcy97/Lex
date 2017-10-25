@@ -56,8 +56,9 @@ public class Node {
 		return nexts;
 	}
 	
-	public boolean equals(Node node) {
-		if (this.nodeID==node.getNodeID()) {
+	@Override
+	public boolean equals(Object node) {
+		if (this.nodeID==((Node)node).getNodeID()) {
 			return true;
 		}
 		return false;
