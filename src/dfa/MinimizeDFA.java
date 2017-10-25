@@ -19,25 +19,10 @@ public class MinimizeDFA {
 
 		while (canDivided(allNodes)) {
 
-			ArrayList<ArrayList<DFANode>> temp = new ArrayList<>();
-			int kindExist = 0;
+			allNodes = divideByEdge(allNodes, 'a');
 
-			for (ArrayList<DFANode> dfaList : allNodes) {
-				ArrayList<Integer> kinds = new ArrayList<>();
-				for (DFANode dfaNode : dfaList) {
-					int kind = whichKind(dfaNode, 'a', allNodes);
-					if (!kinds.contains(kind)) {
-						ArrayList<DFANode> nodes = new ArrayList<>();
-						nodes.add(dfaNode);
-						temp.add(nodes);
-						kindExist++;
-					} else {
-						temp.get(kindExist + kinds.indexOf(kind)).add(dfaNode);
-					}
-				}
-			}
-
-			allNodes = temp;
+			// 按b边分解
+			allNodes = divideByEdge(allNodes, 'b');
 		}
 
 		for (ArrayList<DFANode> arrayList : allNodes) {
@@ -68,7 +53,7 @@ public class MinimizeDFA {
 				 * 遍历字母表里的边（有时间就添加）
 				 */
 
-				//检验a边
+				// 检验a边
 				if (dfaNode.getNext1() != null) {
 					// 如果kinds为空，加入种类
 					if (kinds.isEmpty()) {
@@ -78,8 +63,12 @@ public class MinimizeDFA {
 						return true;
 					}
 				}
-				
-				//检验b边
+
+			}
+
+			kinds.removeAll(kinds);
+			for (DFANode dfaNode : dfaList) {
+				// 检验b边
 				if (dfaNode.getNext2() != null) {
 					// 如果kinds为空，加入种类
 					if (kinds.isEmpty()) {
@@ -97,8 +86,8 @@ public class MinimizeDFA {
 	public int whichKind(DFANode dfaNode, char edge, ArrayList<ArrayList<DFANode>> allNodes) {
 
 		for (int i = 0; i < allNodes.size(); i++) {
-			ArrayList<DFANode> nodes=allNodes.get(i);
-			ArrayList<DFANode> node=dfaNode.getNextDFA(edge);
+			ArrayList<DFANode> nodes = allNodes.get(i);
+			ArrayList<DFANode> node = dfaNode.getNextDFA(edge);
 			for (DFANode dfaNode2 : node) {
 				if (nodes.contains(dfaNode2)) {
 					return i;
@@ -107,6 +96,48 @@ public class MinimizeDFA {
 		}
 
 		return -1;
+	}
+
+	public ArrayList<ArrayList<DFANode>> divideByEdge(ArrayList<ArrayList<DFANode>> allNodes, char edge) {
+		// 存放拆分后的新数组一个Arraylist<dfanode>代表一个dfa0节点
+		ArrayList<ArrayList<DFANode>> temp = new ArrayList<>();
+
+		// 存放当前dfa的偏移量
+		int kindNum = 0;
+		// 遍历每一个dfa0节点
+		for (ArrayList<DFANode> dfaList : allNodes) {
+			// 存放不同的种类
+			ArrayList<Integer> kinds = new ArrayList<>();
+
+			int newKindNum = 0;
+			// 遍历每一个dfa0节点中的dfa节点
+			for (DFANode dfaNode : dfaList) {
+				// 获取dfa节点对应的dfa0节点号
+				int kind = whichKind(dfaNode, edge, allNodes);
+
+				// 如果对应新的dfa0节点，新建一个dfa0节点
+				if (!kinds.contains(kind)) {
+
+					ArrayList<DFANode> nodes = new ArrayList<>();
+					nodes.add(dfaNode);
+
+					// 将新建的dfa0节点放入拆分后的数组
+					temp.add(nodes);
+
+					// 将已有类别放入数组
+					kinds.add(kind);
+					newKindNum++;
+
+				} else {
+
+					temp.get(kindNum + kinds.indexOf(kind)).add(dfaNode);
+				}
+
+			}
+			kindNum += newKindNum;
+		}
+		
+		return temp;
 	}
 
 }

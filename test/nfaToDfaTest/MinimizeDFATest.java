@@ -1,5 +1,7 @@
 package nfaToDfaTest;
 
+import java.util.ArrayList;
+
 import dfa.DFA;
 import dfa.DFABulider;
 import dfa.MinimizeDFA;
@@ -10,7 +12,7 @@ public class MinimizeDFATest {
 
 	
 	public static void main(String[] args) {
-		String re = "((ba*)*a)*(a|b)";
+		String re = "(a|b)a*";
 
 		NFABuilder nfaBuilder = new NFABuilder();
 		NFA nfa = nfaBuilder.createNFA(re);
@@ -20,5 +22,6 @@ public class MinimizeDFATest {
 		
 		MinimizeDFA minimize=new MinimizeDFA();
 		DFA minDfa=minimize.minimizeDFA(dfa);
+		
 	}
 }
