@@ -10,6 +10,8 @@ public class NFA {
 	private Node start;
 	private Node end;
 	private ArrayList<Node> nodes = new ArrayList<>();
+	private ArrayList<Character> alphabet=new ArrayList<>();
+	
 
 	public NFA(char c, NodeController controller) {
 
@@ -104,6 +106,14 @@ public class NFA {
 		this.end = end;
 	}
 	
+	public ArrayList<Character> getAlphabet() {
+		return alphabet;
+	}
+
+	public void setAlphabet(ArrayList<Character> alphabet) {
+		this.alphabet = alphabet;
+	}
+
 	public void print(){
 		for (Node node : nodes) {
 			if (node.getNext1()!=null) {

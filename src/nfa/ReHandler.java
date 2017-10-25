@@ -1,11 +1,12 @@
 package nfa;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Queue;
 import java.util.Stack;
 
 public class ReHandler {
-
+	
 	public static String reChange(String re) {
 		Stack<Character> stack = new Stack<>();
 		char[] reNew = new char[re.length()*2];
@@ -16,7 +17,7 @@ public class ReHandler {
 			if (isChar(c)) {
 				reNew[index] = c;
 				index++;
-				if (i <= re.length() - 1 && (re.charAt(i + 1) == '(' || isChar(re.charAt(i + 1)))) {
+				if (i < re.length() - 1 && (re.charAt(i + 1) == '(' || isChar(re.charAt(i + 1)))) {
 					while (!stack.isEmpty() && 2 <= judge(stack.peek())) {
 						reNew[index] = stack.pop();
 						index++;
@@ -37,6 +38,13 @@ public class ReHandler {
 						index++;
 					}
 					stack.pop();
+					if (i < re.length() - 1 && (re.charAt(i + 1) == '(' || isChar(re.charAt(i + 1)))) {
+						while (!stack.isEmpty() && 2 <= judge(stack.peek())) {
+							reNew[index] = stack.pop();
+							index++;
+						}
+						stack.push('.');
+					}
 				}
 
 				// if is *, add it to the result string,then add a new . to the

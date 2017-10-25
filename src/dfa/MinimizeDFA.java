@@ -17,12 +17,12 @@ public class MinimizeDFA {
 		allNodes.add(starts);
 		allNodes.add(end);
 
-		while (canDivided(allNodes)) {
+		while (canDivided(allNodes,dfa.getAlphabet())) {
 
-			allNodes = divideByEdge(allNodes, 'a');
+			for (char c : dfa.getAlphabet()) {
+				allNodes=divideByEdge(allNodes, c);
+			}
 
-			// 按b边分解
-			allNodes = divideByEdge(allNodes, 'b');
 		}
 
 		for (ArrayList<DFANode> arrayList : allNodes) {
@@ -35,7 +35,7 @@ public class MinimizeDFA {
 		return null;
 	}
 
-	public boolean canDivided(ArrayList<ArrayList<DFANode>> dfaLists) {
+	public boolean canDivided(ArrayList<ArrayList<DFANode>> dfaLists,ArrayList<Character> alphabet) {
 
 		// 遍历每一个dfa0
 		for (ArrayList<DFANode> dfaList : dfaLists) {
@@ -45,39 +45,24 @@ public class MinimizeDFA {
 				continue;
 			}
 
-			ArrayList<Integer> kinds = new ArrayList<>();
 
 			// 如果有不止一个元素，开始遍历
 			for (DFANode dfaNode : dfaList) {
-				/*
-				 * 遍历字母表里的边（有时间就添加）
-				 */
 
-				// 检验a边
-				if (dfaNode.getNext1() != null) {
-					// 如果kinds为空，加入种类
-					if (kinds.isEmpty()) {
-						kinds.add(whichKind(dfaNode, 'a', dfaLists));
-						// 如果下一个和已有种类不同,返回可分
-					} else if (kinds.size() >= 1 && !kinds.contains(whichKind(dfaNode, 'a', dfaLists))) {
-						return true;
+				for (char c : alphabet) {
+					ArrayList<Integer> kinds = new ArrayList<>();
+					// 检验字母表中的边
+					if (dfaNode.getNext1() != null) {
+						// 如果kinds为空，加入种类
+						if (kinds.isEmpty()) {
+							kinds.add(whichKind(dfaNode, c, dfaLists));
+							// 如果下一个和已有种类不同,返回可分
+						} else if (kinds.size() >= 1 && !kinds.contains(whichKind(dfaNode, c, dfaLists))) {
+							return true;
+						}
 					}
 				}
 
-			}
-
-			kinds.removeAll(kinds);
-			for (DFANode dfaNode : dfaList) {
-				// 检验b边
-				if (dfaNode.getNext2() != null) {
-					// 如果kinds为空，加入种类
-					if (kinds.isEmpty()) {
-						kinds.add(whichKind(dfaNode, 'b', dfaLists));
-						// 如果下一个和已有种类不同,返回可分
-					} else if (kinds.size() >= 1 && !kinds.contains(whichKind(dfaNode, 'b', dfaLists))) {
-						return true;
-					}
-				}
 			}
 		}
 		return false;
