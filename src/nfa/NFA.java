@@ -61,6 +61,8 @@ public class NFA {
 	}
 
 	public void select(NFA nfa, NodeController controller) {
+		
+		this.nodes.addAll(nfa.nodes);
 
 		Node newStart = controller.CreateNode();
 		Node newEnd = controller.CreateNode();
@@ -100,6 +102,17 @@ public class NFA {
 
 	public void setEnd(Node end) {
 		this.end = end;
+	}
+	
+	public void print(){
+		for (Node node : nodes) {
+			if (node.getNext1()!=null) {
+				System.out.println(node.getNodeID()+"-"+node.getEdge1()+"->"+node.getNext1().getNodeID());
+			}
+			if (node.getNext2()!=null) {
+				System.out.println(node.getNodeID()+"-"+node.getEdge2()+"->"+node.getNext2().getNodeID());
+			}
+		}
 	}
 
 }

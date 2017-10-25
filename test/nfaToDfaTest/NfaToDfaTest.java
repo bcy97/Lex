@@ -17,12 +17,13 @@ public class NfaToDfaTest {
 	}
 
 	public static void NfaToDfaTest() {
-		String re = "ab*(a|b)*";
+		
+		String re = "(ab*a)*(a|b)*";
 
 		NFABuilder nfaBuilder = new NFABuilder();
 
 		NFA nfa = nfaBuilder.createNFA(re);
-
+nfa.print();
 		DFABulider bulider = new DFABulider();
 
 		DFA dfa = bulider.createDFA(nfa);
@@ -36,10 +37,10 @@ public class NfaToDfaTest {
 			}
 			System.out.print("             ");
 			if (dfaNode.getNext1()!=null) {
-				System.out.print(dfaNode.getEdge1()+" ");
+				System.out.print(dfaNode.getNodeID()+"-"+dfaNode.getEdge1()+"->"+dfaNode.getNext1().getNodeID());
 			}
 			if (dfaNode.getNext2()!=null) {
-				System.out.print(dfaNode.getEdge2());
+				System.out.print(dfaNode.getNodeID()+"-"+dfaNode.getEdge2()+"->"+dfaNode.getNext2().getNodeID());
 			}
 			System.out.println();
 		}
@@ -51,10 +52,11 @@ public class NfaToDfaTest {
 			}
 			System.out.print("             ");
 			if (dfaNode.getNext1()!=null) {
-				System.out.print(dfaNode.getEdge1()+" ");
+				System.out.print(dfaNode.getNodeID()+"-"+dfaNode.getEdge1()+"->"+dfaNode.getNext1().getNodeID());
 			}
+			System.out.print("   ");
 			if (dfaNode.getNext2()!=null) {
-				System.out.print(dfaNode.getEdge2());
+				System.out.print(dfaNode.getNodeID()+"-"+dfaNode.getEdge2()+"->"+dfaNode.getNext2().getNodeID());
 			}
 			System.out.println();
 		}

@@ -12,6 +12,8 @@ public class DFABulider {
 
 	public DFA createDFA(NFA nfa) {
 
+		int index = 0;
+
 		// 两个arraylist存放节点
 		ArrayList<DFANode> dfaNodes = new ArrayList<>();
 		ArrayList<DFANode> dfaNodeNotVisited = new ArrayList<>();
@@ -26,7 +28,8 @@ public class DFABulider {
 		startNodes.add(start);
 		startNodes = find_E_Closure(startNodes);
 		// 获取初始的闭包节点
-		DFANode node = new DFANode(0, startNodes);
+		DFANode node = new DFANode(index, startNodes);
+		index++;
 
 		// 将初始节点放入待访问节点
 		dfaNodeNotVisited.add(node);
@@ -45,18 +48,13 @@ public class DFABulider {
 			ArrayList<Node> next_a_closure = find_E_Closure(find_next(nfaNodes, 'a'));
 			DFANode next_a = null;
 			if (!next_a_closure.isEmpty()) {
-				next_a = new DFANode(0, next_a_closure);
-			}
-
-			// 寻找当前闭包对应的b边的闭包
-			ArrayList<Node> next_b_closure = find_E_Closure(find_next(nfaNodes, 'b'));
-			DFANode next_b = null;
-			if (!next_b_closure.isEmpty()) {
-				next_b = new DFANode(0, next_b_closure);
+				next_a = new DFANode(index, next_a_closure);
+				index++;
 			}
 
 			if (next_a != null && next_a_closure.equals(nfaNodes)) {
 				dfaNode.setNext('a', dfaNode);
+				index--;
 			} else if (next_a != null && !nodeVisited.contains(next_a_closure)
 					&& !nodeNotVisited.contains(next_a_closure)) {
 
@@ -70,17 +68,29 @@ public class DFABulider {
 					&& nodeNotVisited.contains(next_a_closure)) {
 
 				dfaNode.setNext('a', dfaNodeNotVisited.get(nodeNotVisited.indexOf(next_a_closure)));
+				index--;
 
 			} else if (next_a != null && nodeVisited.contains(next_a_closure)
 					&& !nodeNotVisited.contains(next_a_closure)) {
 
 				dfaNode.setNext('a', dfaNodes.get(nodeVisited.indexOf(next_a_closure)));
+				index--;
 
+			}
+
+			// 寻找当前闭包对应的b边的闭包
+			ArrayList<Node> next_b_closure = find_E_Closure(find_next(nfaNodes, 'b'));
+			DFANode next_b = null;
+			if (!next_b_closure.isEmpty()) {
+				next_b = new DFANode(index, next_b_closure);
+				index++;
 			}
 
 			if (next_b != null && next_b_closure.equals(nfaNodes)) {
 				dfaNode.setNext('b', dfaNode);
-			} else if (next_b != null && !nodeVisited.contains(next_b_closure) && !nodeNotVisited.contains(next_b_closure)) {
+				index--;
+			} else if (next_b != null && !nodeVisited.contains(next_b_closure)
+					&& !nodeNotVisited.contains(next_b_closure)) {
 
 				dfaNode.setNext('b', next_b);
 				dfaNodeNotVisited.add(next_b);
@@ -90,11 +100,13 @@ public class DFABulider {
 					&& nodeNotVisited.contains(next_b_closure)) {
 
 				dfaNode.setNext('b', dfaNodeNotVisited.get(nodeNotVisited.indexOf(next_b_closure)));
+				index--;
 
 			} else if (next_b != null && nodeVisited.contains(next_b_closure)
 					&& !nodeNotVisited.contains(next_b_closure)) {
 
 				dfaNode.setNext('b', dfaNodes.get(nodeVisited.indexOf(next_b_closure)));
+				index--;
 
 			}
 

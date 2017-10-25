@@ -26,6 +26,20 @@ public class Node {
 			this.edge2 = edge;
 		}
 	}
+	
+	public ArrayList<Node> getNext(char edge){
+		
+		ArrayList<Node> nexts=new ArrayList<>();
+		
+		if (this.edge1==edge&&this.next1!=null) {
+			nexts.add(this.next1);
+		}
+		if (this.edge2==edge&&this.next2!=null) {
+			nexts.add(this.next2);
+		}
+		
+		return nexts;
+	}
 
 	public ArrayList<Node> getNextAll() {
 

@@ -55,8 +55,8 @@ public class NFABuilder {
 				try {
 					first = nfaStack.pop();
 					second = nfaStack.pop();
-					first.select(second, controller);
-					nfaStack.push(first);
+					second.select(first, controller);
+					nfaStack.push(second);
 					
 				} catch (Exception e) {
 					System.out.println("there are not two nfa in the stack");
