@@ -33,6 +33,7 @@ public class MinimizeDFA {
 
 			DFANode node = new DFANode(i, null);
 			dfa0Nodes.add(node);
+			
 
 			boolean isEnd = false;
 			for (DFANode dfaNode : allNodes.get(i)) {
@@ -50,23 +51,32 @@ public class MinimizeDFA {
 
 		}
 
-		// // 构造dfa0的边
-		// for (int i = 0; i < allNodes.size(); i++) {
-		//
-		// //获取当前dfa0节点对应的dfa节点集合
-		// ArrayList<DFANode> nodeList=allNodes.get(i);
-		// //获取当前的dfa0节点
-		// DFANode dfa0Node=dfa0Nodes.get(i);
-		//
-		// for (DFANode dfaNode : nodeList) {
-		// if (dfaNode.getNext1()!=null) {
-		// char edge=dfaNode.getEdge1();
-		// int kind=whichKind(dfaNode, edge, allNodes);
-		// dfa0Node.setNext(edge, dfaNode.getNext1());
-		// }
-		// }
-		//
-		// }
+		// 构造dfa0的边
+		for (int i = 0; i < allNodes.size(); i++) {
+
+			// 获取当前dfa0节点对应的dfa节点集合
+			ArrayList<DFANode> nodeList = allNodes.get(i);
+			// 获取当前的dfa0节点
+			DFANode dfa0Node = dfa0Nodes.get(i);
+
+			for (DFANode dfaNode : nodeList) {
+				if (dfaNode.getNext1() != null) {
+					char edge = dfaNode.getEdge1();
+					int kind = whichKind(dfaNode, edge, allNodes);
+					DFANode next = dfa0Nodes.get(kind);
+
+					// 判断当前dfa0Node是否有next节点
+					if (dfa0Node.getNext1() == next || dfa0Node.getNext2() == next) {
+						continue;
+						// 如果dfa0Node的下一个节点个数少于2
+					} else if (dfa0Node.getNextDFA().size() < 2) {
+						dfa0Node.setNext(edge, next);
+					}
+
+				}
+			}
+
+		}
 
 		for (ArrayList<DFANode> arrayList : allNodes) {
 			for (DFANode dfaNode : arrayList) {
@@ -76,11 +86,25 @@ public class MinimizeDFA {
 		}
 
 		for (DFANode dfaNode : newStart) {
-			System.out.print(dfaNode.getNodeID() + " ");
+			if (dfaNode.getNext1() != null) {
+				System.out.println(
+						dfaNode.getNodeID() + "-" + dfaNode.getEdge1() + "->" + dfaNode.getNext1().getNodeID());
+			}
+			if (dfaNode.getNext1() != null) {
+				System.out.println(
+						dfaNode.getNodeID() + "-" + dfaNode.getEdge1() + "->" + dfaNode.getNext1().getNodeID());
+			}
 		}
 		System.out.println();
 		for (DFANode dfaNode : newEnd) {
-			System.out.print(dfaNode.getNodeID() + " ");
+			if (dfaNode.getNext1() != null) {
+				System.out.println(
+						dfaNode.getNodeID() + "-" + dfaNode.getEdge1() + "->" + dfaNode.getNext1().getNodeID());
+			}
+			if (dfaNode.getNext1() != null) {
+				System.out.println(
+						dfaNode.getNodeID() + "-" + dfaNode.getEdge1() + "->" + dfaNode.getNext1().getNodeID());
+			}
 		}
 
 		return null;
@@ -106,7 +130,7 @@ public class MinimizeDFA {
 			// 如果有不止一个元素，开始遍历
 			for (char c : alphabet) {
 				ArrayList<Integer> kinds = new ArrayList<>();
-				
+
 				for (DFANode dfaNode : dfaList) {
 
 					// 检验字母表中的边

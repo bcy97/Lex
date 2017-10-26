@@ -20,7 +20,18 @@ public class DFANode extends Node {
 		}
 		return false;
 	}
-
+	
+	public ArrayList<DFANode> getNextDFA() {
+		ArrayList<DFANode> nexts = new ArrayList<>();
+		if (this.getNext1()!=null) {
+			nexts.add((DFANode)this.getNext1());
+		}
+		if (this.getNext2()!=null) {
+			nexts.add((DFANode)this.getNext2());
+		}
+		return nexts;
+	}
+	
 	public ArrayList<DFANode> getNextDFA(char edge) {
 		ArrayList<DFANode> nexts = new ArrayList<>();
 		if (this.getEdge1()==edge&&this.getNext1()!=null) {
