@@ -23,14 +23,34 @@ public class MinimizeDFA {
 
 		}
 
+		// 分出新的开始和终止节点
+		ArrayList<DFANode> newStart = new ArrayList<>();
+		ArrayList<DFANode> newEnd = new ArrayList<>();
+
 		// 初始化dfa0Nodes
 		ArrayList<DFANode> dfa0Nodes = new ArrayList<>();
 		for (int i = 0; i < allNodes.size(); i++) {
+
 			DFANode node = new DFANode(i, null);
 			dfa0Nodes.add(node);
+
+			boolean isEnd = false;
+			for (DFANode dfaNode : allNodes.get(i)) {
+				if (end.contains(dfaNode)) {
+					isEnd = true;
+					break;
+				}
+			}
+
+			if (isEnd) {
+				newEnd.add(node);
+			} else {
+				newStart.add(node);
+			}
+
 		}
 		
-		
+		//构造dfa0的边
 		
 		
 
@@ -40,10 +60,24 @@ public class MinimizeDFA {
 			}
 			System.out.println();
 		}
+		
+		for (DFANode dfaNode : newStart) {
+			System.out.print(dfaNode.getNodeID()+" ");
+		}
+		System.out.println();
+		for (DFANode dfaNode : newEnd) {
+			System.out.print(dfaNode.getNodeID()+" ");
+		}
 
 		return null;
 	}
 
+	/**
+	 * 判断当前dfa0是否可分
+	 * @param dfaLists
+	 * @param alphabet
+	 * @return
+	 */
 	public boolean canDivided(ArrayList<ArrayList<DFANode>> dfaLists, ArrayList<Character> alphabet) {
 
 		// 遍历每一个dfa0
@@ -76,6 +110,14 @@ public class MinimizeDFA {
 		return false;
 	}
 
+	
+	/**
+	 * 找到dfa的下一个状态对应的dfa0状态
+	 * @param dfaNode
+	 * @param edge
+	 * @param allNodes
+	 * @return
+	 */
 	public int whichKind(DFANode dfaNode, char edge, ArrayList<ArrayList<DFANode>> allNodes) {
 
 		for (int i = 0; i < allNodes.size(); i++) {
@@ -91,6 +133,13 @@ public class MinimizeDFA {
 		return -1;
 	}
 
+	
+	/**
+	 * 按照边来分新的等价
+	 * @param allNodes
+	 * @param edge
+	 * @return
+	 */
 	public ArrayList<ArrayList<DFANode>> divideByEdge(ArrayList<ArrayList<DFANode>> allNodes, char edge) {
 		// 存放拆分后的新数组一个Arraylist<dfanode>代表一个dfa0节点
 		ArrayList<ArrayList<DFANode>> temp = new ArrayList<>();
