@@ -15,6 +15,7 @@ public class NFABuilder {
 		ArrayList<Character> alphabet = new ArrayList<>();
 
 		String newRe = ReHandler.reChange(re);
+		System.out.println(newRe);
 
 		Stack<NFA> nfaStack = new Stack<>();
 

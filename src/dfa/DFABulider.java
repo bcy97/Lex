@@ -48,7 +48,7 @@ public class DFABulider {
 			ArrayList<Node> nfaNodes = nodeNotVisited.get(0);
 
 			for (char c : dfa.getAlphabet()) {
-				// 寻找当前闭包对应的a边的闭包
+				// 寻找当前闭包对应的边的闭包
 				ArrayList<Node> next_a_closure = find_E_Closure(find_next(nfaNodes, c));
 				DFANode next_a = null;
 				if (!next_a_closure.isEmpty()) {
