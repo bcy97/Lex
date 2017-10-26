@@ -15,30 +15,36 @@ public class DFANode extends Node {
 
 	@Override
 	public boolean equals(Object dfaNode) {
-		if (dfaNode instanceof DFANode&&this.nfaNodes.equals(((DFANode)dfaNode).getNfaNodes())) {
-			return true;
+		if (dfaNode instanceof DFANode && this.getNodeID() == ((DFANode) dfaNode).getNodeID()) {
+			if (this.getNfaNodes() == null && ((DFANode) dfaNode).getNfaNodes() == null) {
+				return true;
+			} else if (this.nfaNodes.equals(((DFANode) dfaNode).getNfaNodes())) {
+
+				return true;
+			}
 		}
 		return false;
+
 	}
-	
+
 	public ArrayList<DFANode> getNextDFA() {
 		ArrayList<DFANode> nexts = new ArrayList<>();
-		if (this.getNext1()!=null) {
-			nexts.add((DFANode)this.getNext1());
+		if (this.getNext1() != null) {
+			nexts.add((DFANode) this.getNext1());
 		}
-		if (this.getNext2()!=null) {
-			nexts.add((DFANode)this.getNext2());
+		if (this.getNext2() != null) {
+			nexts.add((DFANode) this.getNext2());
 		}
 		return nexts;
 	}
-	
+
 	public ArrayList<DFANode> getNextDFA(char edge) {
 		ArrayList<DFANode> nexts = new ArrayList<>();
-		if (this.getEdge1()==edge&&this.getNext1()!=null) {
-			nexts.add((DFANode)this.getNext1());
+		if (this.getEdge1() == edge && this.getNext1() != null) {
+			nexts.add((DFANode) this.getNext1());
 		}
-		if (this.getEdge2()==edge&&this.getNext2()!=null) {
-			nexts.add((DFANode)this.getNext2());
+		if (this.getEdge2() == edge && this.getNext2() != null) {
+			nexts.add((DFANode) this.getNext2());
 		}
 		return nexts;
 	}

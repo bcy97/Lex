@@ -16,7 +16,7 @@ public class MinimizeDFATest {
 //		String re = "(ab*a)(a|b)b*";
 //		String re = "ab(a|b)*";
 //		String re = "(a|b)*a(a|b)(a|b)(a|b)";
-		String re = "a*(a|b)";
+		String re = "a*b";
 		
 		
 		

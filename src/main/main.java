@@ -17,24 +17,33 @@ import nfa.NFABuilder;
 public class main {
 
 	public static void main(String[] args) {
-		
-		HashMap<DFA, String> dfas=init();
-		
-		Scanner scanner=new Scanner(System.in);
-		String string=scanner.next();
-		
-		while(!string.equals("end")) {
+
+		HashMap<DFA, String> dfas = init();
+
+		Scanner scanner = new Scanner(System.in);
+		String string = scanner.next();
+
+		// 不停的读入字符直到遇到end
+		while (!string.equals("end")) {
+
+			// 遍历所有的dfa，寻找匹配的dfa
 			for (DFA dfa : dfas.keySet()) {
-				DFANode state=dfa.getStartNodes().get(0);
-				for (int i = 0; i < string.length(); i++) {
-					while (state.getNextDFA(string.charAt(i))!=null) {
-						state=state.getNextDFA(string.charAt(i)).get(0);
+				// 从dfa的初状态开始
+				DFANode state = dfa.getStartNodes().get(0);
+				int i = 0;
+				for (i = 0; i < string.length(); i++) {
+					ArrayList<DFANode> nodes = state.getNextDFA(string.charAt(i));
+					if (state.getNextDFA(string.charAt(i)).size() > 0) {
+						state = state.getNextDFA(string.charAt(i)).get(0);
+					} else {
+						break;
 					}
 				}
-				if (dfa.getEndNodes().contains(state)) {
+				if (i == string.length() && dfa.getEndNodes().contains(state)) {
 					System.out.println(dfas.get(dfa));
 				}
 			}
+			string = scanner.next();
 		}
 
 	}
@@ -58,7 +67,6 @@ public class main {
 				reStrings.add(token[1]);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

@@ -94,46 +94,46 @@ public class MinimizeDFA {
 		}
 		
 		DFA dfa0=new DFA(newStart, newEnd);
-		return dfa0;
-//
-//		for (ArrayList<DFANode> arrayList : allNodes) {
-//			for (DFANode dfaNode : arrayList) {
-//				System.out.print(dfaNode.getNodeID() + " ");
-//			}
-//			System.out.println();
-//		}
-//
-//		System.out.print("start nodes    ");
-//		for (DFANode dfaNode : newStart) {
-//			System.out.print(dfaNode.getNodeID()+" ");
-//		}
-//		System.out.println();
-//		for (DFANode dfaNode : newStart) {
-//			if (dfaNode.getNext1() != null) {
-//				System.out.println(
-//						dfaNode.getNodeID() + "-" + dfaNode.getEdge1() + "->" + dfaNode.getNext1().getNodeID());
-//			}
-//			if (dfaNode.getNext2() != null) {
-//				System.out.println(
-//						dfaNode.getNodeID() + "-" + dfaNode.getEdge2() + "->" + dfaNode.getNext2().getNodeID());
-//			}
-//		}
-//		System.out.print("end nodes    ");
-//		for (DFANode dfaNode : newEnd) {
-//			System.out.print(dfaNode.getNodeID()+" ");
-//		}
-//		System.out.println();
-//		for (DFANode dfaNode : newEnd) {
-//			if (dfaNode.getNext1() != null) {
-//				System.out.println(
-//						dfaNode.getNodeID() + "-" + dfaNode.getEdge1() + "->" + dfaNode.getNext1().getNodeID());
-//			}
-//			if (dfaNode.getNext2() != null) {
-//				System.out.println(
-//						dfaNode.getNodeID() + "-" + dfaNode.getEdge2() + "->" + dfaNode.getNext2().getNodeID());
-//			}
-//		}
 
+		for (ArrayList<DFANode> arrayList : allNodes) {
+			for (DFANode dfaNode : arrayList) {
+				System.out.print(dfaNode.getNodeID() + " ");
+			}
+			System.out.println();
+		}
+
+		System.out.print("start nodes    ");
+		for (DFANode dfaNode : newStart) {
+			System.out.print(dfaNode.getNodeID()+" ");
+		}
+		System.out.println();
+		for (DFANode dfaNode : newStart) {
+			if (dfaNode.getNext1() != null) {
+				System.out.println(
+						dfaNode.getNodeID() + "-" + dfaNode.getEdge1() + "->" + dfaNode.getNext1().getNodeID());
+			}
+			if (dfaNode.getNext2() != null) {
+				System.out.println(
+						dfaNode.getNodeID() + "-" + dfaNode.getEdge2() + "->" + dfaNode.getNext2().getNodeID());
+			}
+		}
+		System.out.print("end nodes    ");
+		for (DFANode dfaNode : newEnd) {
+			System.out.print(dfaNode.getNodeID()+" ");
+		}
+		System.out.println();
+		for (DFANode dfaNode : newEnd) {
+			if (dfaNode.getNext1() != null) {
+				System.out.println(
+						dfaNode.getNodeID() + "-" + dfaNode.getEdge1() + "->" + dfaNode.getNext1().getNodeID());
+			}
+			if (dfaNode.getNext2() != null) {
+				System.out.println(
+						dfaNode.getNodeID() + "-" + dfaNode.getEdge2() + "->" + dfaNode.getNext2().getNodeID());
+			}
+		}
+
+		return dfa0;
 	}
 
 	/**
