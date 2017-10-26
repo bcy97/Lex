@@ -13,7 +13,7 @@ import nfa.NFABuilder;
 public class MinimizeDFATest {
 
 	public static void main(String[] args) {
-		String re = "(a|b)a*c";
+		String re = "(a|b)a*(a|b)*";
 
 		NFABuilder nfaBuilder = new NFABuilder();
 		NFA nfa = nfaBuilder.createNFA(re);

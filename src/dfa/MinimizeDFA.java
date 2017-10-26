@@ -33,7 +33,6 @@ public class MinimizeDFA {
 
 			DFANode node = new DFANode(i, null);
 			dfa0Nodes.add(node);
-			
 
 			boolean isEnd = false;
 			for (DFANode dfaNode : allNodes.get(i)) {
@@ -66,7 +65,24 @@ public class MinimizeDFA {
 					DFANode next = dfa0Nodes.get(kind);
 
 					// 判断当前dfa0Node是否有next节点
-					if (dfa0Node.getNext1() == next || dfa0Node.getNext2() == next) {
+					if ((dfa0Node.getNext1() == next && dfa0Node.getEdge1() == edge)
+							|| (dfa0Node.getNext2() == next && dfa0Node.getEdge2() == edge)) {
+						continue;
+						// 如果dfa0Node的下一个节点个数少于2
+					} else if (dfa0Node.getNextDFA().size() < 2) {
+						dfa0Node.setNext(edge, next);
+					}
+
+				}
+
+				if (dfaNode.getNext2() != null) {
+					char edge = dfaNode.getEdge2();
+					int kind = whichKind(dfaNode, edge, allNodes);
+					DFANode next = dfa0Nodes.get(kind);
+
+					// 判断当前dfa0Node是否有next节点
+					if ((dfa0Node.getNext1() == next && dfa0Node.getEdge1() == edge)
+							|| (dfa0Node.getNext2() == next && dfa0Node.getEdge2() == edge)) {
 						continue;
 						// 如果dfa0Node的下一个节点个数少于2
 					} else if (dfa0Node.getNextDFA().size() < 2) {
@@ -85,15 +101,24 @@ public class MinimizeDFA {
 			System.out.println();
 		}
 
+		System.out.print("start nodes    ");
+		for (DFANode dfaNode : newStart) {
+			System.out.print(dfaNode.getNodeID()+" ");
+		}
+		System.out.println();
 		for (DFANode dfaNode : newStart) {
 			if (dfaNode.getNext1() != null) {
 				System.out.println(
 						dfaNode.getNodeID() + "-" + dfaNode.getEdge1() + "->" + dfaNode.getNext1().getNodeID());
 			}
-			if (dfaNode.getNext1() != null) {
+			if (dfaNode.getNext2() != null) {
 				System.out.println(
-						dfaNode.getNodeID() + "-" + dfaNode.getEdge1() + "->" + dfaNode.getNext1().getNodeID());
+						dfaNode.getNodeID() + "-" + dfaNode.getEdge2() + "->" + dfaNode.getNext2().getNodeID());
 			}
+		}
+		System.out.print("end nodes    ");
+		for (DFANode dfaNode : newEnd) {
+			System.out.print(dfaNode.getNodeID()+" ");
 		}
 		System.out.println();
 		for (DFANode dfaNode : newEnd) {
@@ -101,9 +126,9 @@ public class MinimizeDFA {
 				System.out.println(
 						dfaNode.getNodeID() + "-" + dfaNode.getEdge1() + "->" + dfaNode.getNext1().getNodeID());
 			}
-			if (dfaNode.getNext1() != null) {
+			if (dfaNode.getNext2() != null) {
 				System.out.println(
-						dfaNode.getNodeID() + "-" + dfaNode.getEdge1() + "->" + dfaNode.getNext1().getNodeID());
+						dfaNode.getNodeID() + "-" + dfaNode.getEdge2() + "->" + dfaNode.getNext2().getNodeID());
 			}
 		}
 
