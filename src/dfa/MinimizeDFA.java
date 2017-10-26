@@ -49,10 +49,24 @@ public class MinimizeDFA {
 			}
 
 		}
-		
-		//构造dfa0的边
-		
-		
+
+		// // 构造dfa0的边
+		// for (int i = 0; i < allNodes.size(); i++) {
+		//
+		// //获取当前dfa0节点对应的dfa节点集合
+		// ArrayList<DFANode> nodeList=allNodes.get(i);
+		// //获取当前的dfa0节点
+		// DFANode dfa0Node=dfa0Nodes.get(i);
+		//
+		// for (DFANode dfaNode : nodeList) {
+		// if (dfaNode.getNext1()!=null) {
+		// char edge=dfaNode.getEdge1();
+		// int kind=whichKind(dfaNode, edge, allNodes);
+		// dfa0Node.setNext(edge, dfaNode.getNext1());
+		// }
+		// }
+		//
+		// }
 
 		for (ArrayList<DFANode> arrayList : allNodes) {
 			for (DFANode dfaNode : arrayList) {
@@ -60,13 +74,13 @@ public class MinimizeDFA {
 			}
 			System.out.println();
 		}
-		
+
 		for (DFANode dfaNode : newStart) {
-			System.out.print(dfaNode.getNodeID()+" ");
+			System.out.print(dfaNode.getNodeID() + " ");
 		}
 		System.out.println();
 		for (DFANode dfaNode : newEnd) {
-			System.out.print(dfaNode.getNodeID()+" ");
+			System.out.print(dfaNode.getNodeID() + " ");
 		}
 
 		return null;
@@ -74,6 +88,7 @@ public class MinimizeDFA {
 
 	/**
 	 * 判断当前dfa0是否可分
+	 * 
 	 * @param dfaLists
 	 * @param alphabet
 	 * @return
@@ -89,19 +104,18 @@ public class MinimizeDFA {
 			}
 
 			// 如果有不止一个元素，开始遍历
-			for (DFANode dfaNode : dfaList) {
+			for (char c : alphabet) {
+				ArrayList<Integer> kinds = new ArrayList<>();
+				
+				for (DFANode dfaNode : dfaList) {
 
-				for (char c : alphabet) {
-					ArrayList<Integer> kinds = new ArrayList<>();
 					// 检验字母表中的边
-					if (dfaNode.getNext1() != null) {
-						// 如果kinds为空，加入种类
-						if (kinds.isEmpty()) {
-							kinds.add(whichKind(dfaNode, c, dfaLists));
-							// 如果下一个和已有种类不同,返回可分
-						} else if (kinds.size() >= 1 && !kinds.contains(whichKind(dfaNode, c, dfaLists))) {
-							return true;
-						}
+					// 如果kinds为空，加入种类
+					if (kinds.isEmpty()) {
+						kinds.add(whichKind(dfaNode, c, dfaLists));
+						// 如果下一个和已有种类不同,返回可分
+					} else if (kinds.size() >= 1 && !kinds.contains(whichKind(dfaNode, c, dfaLists))) {
+						return true;
 					}
 				}
 
@@ -110,9 +124,9 @@ public class MinimizeDFA {
 		return false;
 	}
 
-	
 	/**
 	 * 找到dfa的下一个状态对应的dfa0状态
+	 * 
 	 * @param dfaNode
 	 * @param edge
 	 * @param allNodes
@@ -133,9 +147,9 @@ public class MinimizeDFA {
 		return -1;
 	}
 
-	
 	/**
 	 * 按照边来分新的等价
+	 * 
 	 * @param allNodes
 	 * @param edge
 	 * @return
