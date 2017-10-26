@@ -15,7 +15,10 @@ public class MinimizeDFATest {
 	public static void main(String[] args) {
 //		String re = "(ab*a)(a|b)b*";
 //		String re = "ab(a|b)*";
-		String re = "(a|b)*a(a|b)(a|b)(a|b)";
+//		String re = "(a|b)*a(a|b)(a|b)(a|b)";
+		String re = "a*(a|b)";
+		
+		
 		
 
 		NFABuilder nfaBuilder = new NFABuilder();
