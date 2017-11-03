@@ -1,16 +1,23 @@
 package dfa;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import fa.Node;
 
-public class DFANode extends Node {
+public class DFANode {
+
+	private int nodeID;
+
+	private HashMap<Character, DFANode> nexts;
 
 	private ArrayList<Node> nfaNodes;
 
 	public DFANode(int id, ArrayList<Node> nfaNodes) {
-		super(id);
+		this.nodeID = id;
 		this.nfaNodes = nfaNodes;
+		this.nexts=new HashMap<>();
 	}
 
 	@Override
@@ -27,26 +34,38 @@ public class DFANode extends Node {
 
 	}
 
+	public void setNext(char edge, DFANode dfaNode) {
+		if (nexts.containsKey(edge)) {
+			return;
+		} else {
+			nexts.put(edge, dfaNode);
+		}
+	}
+
 	public ArrayList<DFANode> getNextDFA() {
-		ArrayList<DFANode> nexts = new ArrayList<>();
-		if (this.getNext1() != null) {
-			nexts.add((DFANode) this.getNext1());
-		}
-		if (this.getNext2() != null) {
-			nexts.add((DFANode) this.getNext2());
-		}
+		ArrayList<DFANode> next = new ArrayList<>();
+		next = (ArrayList<DFANode>) nexts.values();
+		return next;
+	}
+
+	public DFANode getNextDFA(char edge) {
+		return nexts.get(edge);
+	}
+
+	public int getNodeID() {
+		return nodeID;
+	}
+
+	public void setNodeID(int nodeID) {
+		this.nodeID = nodeID;
+	}
+
+	public Map<Character, DFANode> getNexts() {
 		return nexts;
 	}
 
-	public ArrayList<DFANode> getNextDFA(char edge) {
-		ArrayList<DFANode> nexts = new ArrayList<>();
-		if (this.getEdge1() == edge && this.getNext1() != null) {
-			nexts.add((DFANode) this.getNext1());
-		}
-		if (this.getEdge2() == edge && this.getNext2() != null) {
-			nexts.add((DFANode) this.getNext2());
-		}
-		return nexts;
+	public void setNexts(HashMap<Character, DFANode> nexts) {
+		this.nexts = nexts;
 	}
 
 	public ArrayList<Node> getNfaNodes() {

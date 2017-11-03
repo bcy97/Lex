@@ -1,6 +1,7 @@
 package dfa;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class MinimizeDFA {
 
@@ -59,79 +60,98 @@ public class MinimizeDFA {
 			DFANode dfa0Node = dfa0Nodes.get(i);
 
 			for (DFANode dfaNode : nodeList) {
-				if (dfaNode.getNext1() != null) {
-					char edge = dfaNode.getEdge1();
+
+				for (char edge : dfaNode.getNexts().keySet()) {
 					int kind = whichKind(dfaNode, edge, allNodes);
 					DFANode next = dfa0Nodes.get(kind);
-
-					// 判断当前dfa0Node是否有next节点
-					if ((dfa0Node.getNext1() == next && dfa0Node.getEdge1() == edge)
-							|| (dfa0Node.getNext2() == next && dfa0Node.getEdge2() == edge)) {
+					if (dfa0Node.getNexts().containsKey(edge) && dfa0Node.getNexts().get(edge) == next) {
 						continue;
-						// 如果dfa0Node的下一个节点个数少于2
-					} else if (dfa0Node.getNextDFA().size() < 2) {
+					} else {
 						dfa0Node.setNext(edge, next);
 					}
-
 				}
-
-				if (dfaNode.getNext2() != null) {
-					char edge = dfaNode.getEdge2();
-					int kind = whichKind(dfaNode, edge, allNodes);
-					DFANode next = dfa0Nodes.get(kind);
-
-					// 判断当前dfa0Node是否有next节点
-					if ((dfa0Node.getNext1() == next && dfa0Node.getEdge1() == edge)
-							|| (dfa0Node.getNext2() == next && dfa0Node.getEdge2() == edge)) {
-						continue;
-						// 如果dfa0Node的下一个节点个数少于2
-					} else if (dfa0Node.getNextDFA().size() < 2) {
-						dfa0Node.setNext(edge, next);
-					}
-
-				}
+				//
+				// if (dfaNode.getNext1() != null) {
+				// char edge = dfaNode.getEdge1();
+				// int kind = whichKind(dfaNode, edge, allNodes);
+				// DFANode next = dfa0Nodes.get(kind);
+				//
+				// // 判断当前dfa0Node是否有next节点
+				// if ((dfa0Node.getNext1() == next && dfa0Node.getEdge1() ==
+				// edge)
+				// || (dfa0Node.getNext2() == next && dfa0Node.getEdge2() ==
+				// edge)) {
+				// continue;
+				// // 如果dfa0Node的下一个节点个数少于2
+				// } else if (dfa0Node.getNextDFA().size() < 2) {
+				// dfa0Node.setNext(edge, next);
+				// }
+				//
+				// }
+				//
+				// if (dfaNode.getNext2() != null) {
+				// char edge = dfaNode.getEdge2();
+				// int kind = whichKind(dfaNode, edge, allNodes);
+				// DFANode next = dfa0Nodes.get(kind);
+				//
+				// // 判断当前dfa0Node是否有next节点
+				// if ((dfa0Node.getNext1() == next && dfa0Node.getEdge1() ==
+				// edge)
+				// || (dfa0Node.getNext2() == next && dfa0Node.getEdge2() ==
+				// edge)) {
+				// continue;
+				// // 如果dfa0Node的下一个节点个数少于2
+				// } else if (dfa0Node.getNextDFA().size() < 2) {
+				// dfa0Node.setNext(edge, next);
+				// }
+				//
+				// }
 			}
 		}
-		
-		DFA dfa0=new DFA(newStart, newEnd);
 
-//		for (ArrayList<DFANode> arrayList : allNodes) {
-//			for (DFANode dfaNode : arrayList) {
-//				System.out.print(dfaNode.getNodeID() + " ");
-//			}
-//			System.out.println();
-//		}
-//
-//		System.out.print("start nodes    ");
-//		for (DFANode dfaNode : newStart) {
-//			System.out.print(dfaNode.getNodeID()+" ");
-//		}
-//		System.out.println();
-//		for (DFANode dfaNode : newStart) {
-//			if (dfaNode.getNext1() != null) {
-//				System.out.println(
-//						dfaNode.getNodeID() + "-" + dfaNode.getEdge1() + "->" + dfaNode.getNext1().getNodeID());
-//			}
-//			if (dfaNode.getNext2() != null) {
-//				System.out.println(
-//						dfaNode.getNodeID() + "-" + dfaNode.getEdge2() + "->" + dfaNode.getNext2().getNodeID());
-//			}
-//		}
-//		System.out.print("end nodes    ");
-//		for (DFANode dfaNode : newEnd) {
-//			System.out.print(dfaNode.getNodeID()+" ");
-//		}
-//		System.out.println();
-//		for (DFANode dfaNode : newEnd) {
-//			if (dfaNode.getNext1() != null) {
-//				System.out.println(
-//						dfaNode.getNodeID() + "-" + dfaNode.getEdge1() + "->" + dfaNode.getNext1().getNodeID());
-//			}
-//			if (dfaNode.getNext2() != null) {
-//				System.out.println(
-//						dfaNode.getNodeID() + "-" + dfaNode.getEdge2() + "->" + dfaNode.getNext2().getNodeID());
-//			}
-//		}
+		DFA dfa0 = new DFA(newStart, newEnd);
+
+		// for (ArrayList<DFANode> arrayList : allNodes) {
+		// for (DFANode dfaNode : arrayList) {
+		// System.out.print(dfaNode.getNodeID() + " ");
+		// }
+		// System.out.println();
+		// }
+		//
+		// System.out.print("start nodes ");
+		// for (DFANode dfaNode : newStart) {
+		// System.out.print(dfaNode.getNodeID()+" ");
+		// }
+		// System.out.println();
+		// for (DFANode dfaNode : newStart) {
+		// if (dfaNode.getNext1() != null) {
+		// System.out.println(
+		// dfaNode.getNodeID() + "-" + dfaNode.getEdge1() + "->" +
+		// dfaNode.getNext1().getNodeID());
+		// }
+		// if (dfaNode.getNext2() != null) {
+		// System.out.println(
+		// dfaNode.getNodeID() + "-" + dfaNode.getEdge2() + "->" +
+		// dfaNode.getNext2().getNodeID());
+		// }
+		// }
+		// System.out.print("end nodes ");
+		// for (DFANode dfaNode : newEnd) {
+		// System.out.print(dfaNode.getNodeID()+" ");
+		// }
+		// System.out.println();
+		// for (DFANode dfaNode : newEnd) {
+		// if (dfaNode.getNext1() != null) {
+		// System.out.println(
+		// dfaNode.getNodeID() + "-" + dfaNode.getEdge1() + "->" +
+		// dfaNode.getNext1().getNodeID());
+		// }
+		// if (dfaNode.getNext2() != null) {
+		// System.out.println(
+		// dfaNode.getNodeID() + "-" + dfaNode.getEdge2() + "->" +
+		// dfaNode.getNext2().getNodeID());
+		// }
+		// }
 
 		return dfa0;
 	}
@@ -186,11 +206,9 @@ public class MinimizeDFA {
 
 		for (int i = 0; i < allNodes.size(); i++) {
 			ArrayList<DFANode> nodes = allNodes.get(i);
-			ArrayList<DFANode> node = dfaNode.getNextDFA(edge);
-			for (DFANode dfaNode2 : node) {
-				if (nodes.contains(dfaNode2)) {
-					return i;
-				}
+			DFANode node = dfaNode.getNextDFA(edge);
+			if (nodes.contains(node)) {
+				return i;
 			}
 		}
 

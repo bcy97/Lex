@@ -32,9 +32,9 @@ public class main {
 				DFANode state = dfa.getStartNodes().get(0);
 				int i = 0;
 				for (i = 0; i < string.length(); i++) {
-					ArrayList<DFANode> nodes = state.getNextDFA(string.charAt(i));
-					if (state.getNextDFA(string.charAt(i)).size() > 0) {
-						state = state.getNextDFA(string.charAt(i)).get(0);
+					DFANode node = state.getNextDFA(string.charAt(i));
+					if (node!=null) {
+						state = node;
 					} else {
 						break;
 					}
