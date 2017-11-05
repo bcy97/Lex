@@ -1,9 +1,11 @@
 package main;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,25 +23,28 @@ public class LEX {
 	public static void main(String[] args) {
 
 		HashMap<String, DFA> dfas = init();
-		
-		
-		File file = new File(System.getProperty("user.dir")+"/file/input.txt");
-		
+
+		File inFile = new File(System.getProperty("user.dir") + "/file/input.txt");
+		File outFile = new File(System.getProperty("user.dir") + "/file/output.txt");
+
 		try {
-			BufferedReader reader= new BufferedReader(new FileReader(file));
+			BufferedReader reader = new BufferedReader(new FileReader(inFile));
 			String string = reader.readLine();
-			
+			BufferedWriter writer = new BufferedWriter(new FileWriter(outFile));
+
 			// 不停的读入字符
-			while (string!=null) {
-				String[] strs=string.split(" ");
-				
+			while (string != null) {
+				String[] strs = string.split(" ");
+
 				for (String str : strs) {
 					if (str.equals("")) {
 						continue;
 					}
-					judgeToken(str, dfas);
+					String result = judgeToken(str, dfas);
+					writer.write(result+'\n');
+					writer.flush();
 				}
-				
+
 				string = reader.readLine();
 			}
 		} catch (FileNotFoundException e) {
@@ -58,7 +63,7 @@ public class LEX {
 
 		ArrayList<String> reStrings = new ArrayList<>();
 		ArrayList<String> tokens = new ArrayList<>();
-		File file = new File(System.getProperty("user.dir")+"/file/re.txt");
+		File file = new File(System.getProperty("user.dir") + "/file/re.txt");
 
 		String s = "";
 		try {
@@ -93,7 +98,8 @@ public class LEX {
 
 	}
 
-	public static void judgeToken(String string, HashMap<String, DFA> dfas) {
+	public static String judgeToken(String string, HashMap<String, DFA> dfas) {
+
 		boolean found = false;
 
 		// 先判断是否有保留字
@@ -111,8 +117,7 @@ public class LEX {
 				}
 			}
 			if (i == string.length() && dfa.getEndNodes().contains(state)) {
-				System.out.println("Token{type='reserve', code='" + string + "', error='null'}");
-				return;
+				return "Token{type='reserve', code='" + string + "', error='null'}";
 			}
 		}
 
@@ -138,13 +143,10 @@ public class LEX {
 			}
 			if (i == string.length() && dfa.getEndNodes().contains(state)) {
 				// System.out.println(string + " " + token);
-				System.out.println("Token{type='" + token + "', code='" + string + "', error='null'}");
-				found = true;
+				return "Token{type='" + token + "', code='" + string + "', error='null'}";
 			}
 		}
 
-		if (!found) {
-			System.out.println("Token{type='null', code='" + string + "', error='null'}");
-		}
+		return "Token{type='null', code='" + string + "', error='null'}";
 	}
 }
