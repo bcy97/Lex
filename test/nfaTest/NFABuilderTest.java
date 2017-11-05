@@ -6,7 +6,7 @@ import nfa.NFABuilder;
 public class NFABuilderTest {
 
 	public static void main(String[] args) {
-		String re = "(a*b*)|ac*ab";
+		String re = "((-|d)(d*\\.d*))|((-|d)(d*))";
 
 		NFABuilder nfaBuilder = new NFABuilder();
 		NFA nfa = nfaBuilder.createNFA(re);

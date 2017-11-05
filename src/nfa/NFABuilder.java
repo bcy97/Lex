@@ -32,6 +32,15 @@ public class NFABuilder {
 
 				NFA nfa = new NFA(c, controller);
 				nfaStack.push(nfa);
+			} else if (c == '\\') {
+
+				if (!alphabet.contains('.')) {
+					alphabet.add('.');
+				}
+
+				NFA nfa = new NFA('.', controller);
+				nfaStack.push(nfa);
+				i++;
 
 				// if c is ., pop the top two elements in the stack and join
 				// them, then push the new nfa into the stack
@@ -75,7 +84,7 @@ public class NFABuilder {
 
 			}
 		}
-		
+
 		nfaStack.peek().setAlphabet(alphabet);
 
 		return nfaStack.pop();

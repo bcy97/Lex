@@ -6,10 +6,10 @@ import java.util.Queue;
 import java.util.Stack;
 
 public class ReHandler {
-	
+
 	public static String reChange(String re) {
 		Stack<Character> stack = new Stack<>();
-		char[] reNew = new char[re.length()*2];
+		char[] reNew = new char[re.length() * 2];
 		int index = 0;
 
 		for (int i = 0; i < re.length(); i++) {
@@ -17,7 +17,8 @@ public class ReHandler {
 			if (isChar(c)) {
 				reNew[index] = c;
 				index++;
-				if (i < re.length() - 1 && (re.charAt(i + 1) == '(' || isChar(re.charAt(i + 1)))) {
+				if (i < re.length() - 1
+						&& (re.charAt(i + 1) == '(' || isChar(re.charAt(i + 1)) || (re.charAt(i + 1) == '\\'))) {
 					while (!stack.isEmpty() && 2 <= judge(stack.peek())) {
 						reNew[index] = stack.pop();
 						index++;
@@ -25,6 +26,25 @@ public class ReHandler {
 					stack.push('.');
 				}
 			} else {
+
+				// if current char is \ and the next is .,put \.in to new re
+				if (c == '\\' && re.charAt(i + 1) == '.') {
+					reNew[index] = c;
+					index++;
+					reNew[index] = re.charAt(i + 1);
+					index++;
+					i++;
+
+					if (i < re.length() - 1
+							&& (re.charAt(i + 1) == '(' || isChar(re.charAt(i + 1)) || (re.charAt(i + 1) == '\\'))) {
+						while (!stack.isEmpty() && 2 <= judge(stack.peek())) {
+							reNew[index] = stack.pop();
+							index++;
+						}
+						stack.push('.');
+					}
+
+				}
 
 				// if is (, push ( into the stack
 				if (c == '(') {
@@ -38,7 +58,8 @@ public class ReHandler {
 						index++;
 					}
 					stack.pop();
-					if (i < re.length() - 1 && (re.charAt(i + 1) == '(' || isChar(re.charAt(i + 1)))) {
+					if (i < re.length() - 1
+							&& (re.charAt(i + 1) == '(' || isChar(re.charAt(i + 1)) || (re.charAt(i + 1) == '\\'))) {
 						while (!stack.isEmpty() && 2 <= judge(stack.peek())) {
 							reNew[index] = stack.pop();
 							index++;
@@ -52,7 +73,8 @@ public class ReHandler {
 				if (c == '*') {
 					reNew[index] = c;
 					index++;
-					if (i < re.length() - 1 && (re.charAt(i + 1) == '(' || isChar(re.charAt(i + 1)))) {
+					if (i < re.length() - 1
+							&& (re.charAt(i + 1) == '(' || isChar(re.charAt(i + 1)) || (re.charAt(i + 1) == '\\'))) {
 						while (!stack.isEmpty() && 2 <= judge(stack.peek())) {
 							reNew[index] = stack.pop();
 							index++;
@@ -83,7 +105,7 @@ public class ReHandler {
 	}
 
 	public static boolean isChar(char a) {
-		if (a >= 'a' && a <= 'z' || a >= 'A' && a <= 'Z') {
+		if (a >= 'a' && a <= 'z' || a >= 'A' && a <= 'Z' || a == '_' || a == '-') {
 			return true;
 		}
 		return false;

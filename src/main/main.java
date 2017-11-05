@@ -19,6 +19,10 @@ public class main {
 	public static void main(String[] args) {
 
 		HashMap<DFA, String> dfas = init();
+		
+//		letter (_|l)(l|d)*
+//		number ((-|d)(d*\.d*))|((-|d)(d*))
+//		end
 
 		Scanner scanner = new Scanner(System.in);
 		String string = scanner.next();
