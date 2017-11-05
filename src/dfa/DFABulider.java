@@ -115,10 +115,10 @@ public class DFABulider {
 		while (!hasAll(nodes)) {
 			ArrayList<Node> temp = new ArrayList<>();
 			for (Node node : nodes) {
-				if (node.getEdge1() == 'e' && !nodes.contains(node.getNext1()) && !temp.contains(node.getNext1())) {
+				if (node.getEdge1() == '#' && !nodes.contains(node.getNext1()) && !temp.contains(node.getNext1())) {
 					temp.add(node.getNext1());
 				}
-				if (node.getEdge2() == 'e' && !nodes.contains(node.getNext2()) && !temp.contains(node.getNext2())) {
+				if (node.getEdge2() == '#' && !nodes.contains(node.getNext2()) && !temp.contains(node.getNext2())) {
 					temp.add(node.getNext2());
 				}
 			}
@@ -142,10 +142,10 @@ public class DFABulider {
 	public boolean hasAll(ArrayList<Node> nodes) {
 
 		for (Node node : nodes) {
-			if (node.getNext1() != null && node.getEdge1() == 'e' && !nodes.contains(node.getNext1())) {
+			if (node.getNext1() != null && node.getEdge1() == '#' && !nodes.contains(node.getNext1())) {
 				return false;
 			}
-			if (node.getNext2() != null && node.getEdge2() == 'e' && !nodes.contains(node.getNext2())) {
+			if (node.getNext2() != null && node.getEdge2() == '#' && !nodes.contains(node.getNext2())) {
 				return false;
 			}
 		}

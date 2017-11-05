@@ -4,9 +4,9 @@ import nfa.ReHandler;
 
 public class RETest {
 
-	public ReHandler reHandler=new ReHandler();
 	
-	public void reHandlerTest1(){
-		
+	public static void main(String []args){
+//		System.out.println(ReHandler.reChange("=|\\*|-|+|/|;"));
+		System.out.println(ReHandler.reChange("((-|d)(d*\\.d*))|((-|d)(d*))"));
 	}
 }

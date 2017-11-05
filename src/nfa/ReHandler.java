@@ -27,8 +27,9 @@ public class ReHandler {
 				}
 			} else {
 
-				// if current char is \ and the next is .,put \.in to new re
-				if (c == '\\' && re.charAt(i + 1) == '.') {
+				// if current char is \ ,put the char after \ in to new re
+				if (c == '\\') {
+
 					reNew[index] = c;
 					index++;
 					reNew[index] = re.charAt(i + 1);
@@ -105,7 +106,9 @@ public class ReHandler {
 	}
 
 	public static boolean isChar(char a) {
-		if (a >= 'a' && a <= 'z' || a >= 'A' && a <= 'Z' || a == '_' || a == '-') {
+		if (a >= 'a' && a <= 'z' || a >= 'A' && a <= 'Z' || a == '_' || a == '-' || a == '=' || a == '+' || a == '/'
+				|| a == ';') {
+			// if (a!='|'&&a!='*'&&a!='('&&a!=')'&&a!='\\'&&a!='.') {
 			return true;
 		}
 		return false;

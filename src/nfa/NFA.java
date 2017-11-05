@@ -10,8 +10,7 @@ public class NFA {
 	private Node start;
 	private Node end;
 	private ArrayList<Node> nodes = new ArrayList<>();
-	private ArrayList<Character> alphabet=new ArrayList<>();
-	
+	private ArrayList<Character> alphabet = new ArrayList<>();
 
 	public NFA(char c, NodeController controller) {
 
@@ -20,7 +19,7 @@ public class NFA {
 
 		start.setEdge1(c);
 		start.setNext1(end);
-		
+
 		nodes.add(start);
 		nodes.add(end);
 
@@ -36,8 +35,8 @@ public class NFA {
 		for (Node node : nfa.getNodes()) {
 			nodes.add(node);
 		}
-		
-		end.setNext('e', nfa.start);
+
+		end.setNext('#', nfa.start);
 
 		this.end = nfa.end;
 
@@ -47,36 +46,36 @@ public class NFA {
 
 		Node newStart = controller.CreateNode();
 		Node newEnd = controller.CreateNode();
-		
+
 		nodes.add(newStart);
 		nodes.add(newEnd);
 
-		end.setNext('e', newEnd);
-		end.setNext('e', start);
+		end.setNext('#', newEnd);
+		end.setNext('#', start);
 
-		newStart.setNext('e', start);
+		newStart.setNext('#', start);
 
-		newStart.setNext('e', newEnd);
+		newStart.setNext('#', newEnd);
 
 		this.start = newStart;
 		this.end = newEnd;
 	}
 
 	public void select(NFA nfa, NodeController controller) {
-		
+
 		this.nodes.addAll(nfa.nodes);
 
 		Node newStart = controller.CreateNode();
 		Node newEnd = controller.CreateNode();
-		
+
 		nodes.add(newStart);
 		nodes.add(newEnd);
 
-		newStart.setNext('e', this.start);
-		newStart.setNext('e', nfa.start);
+		newStart.setNext('#', this.start);
+		newStart.setNext('#', nfa.start);
 
-		this.end.setNext('e', newEnd);
-		nfa.end.setNext('e', newEnd);
+		this.end.setNext('#', newEnd);
+		nfa.end.setNext('#', newEnd);
 
 		this.start = newStart;
 		this.end = newEnd;
@@ -105,7 +104,7 @@ public class NFA {
 	public void setEnd(Node end) {
 		this.end = end;
 	}
-	
+
 	public ArrayList<Character> getAlphabet() {
 		return alphabet;
 	}
@@ -114,13 +113,13 @@ public class NFA {
 		this.alphabet = alphabet;
 	}
 
-	public void print(){
+	public void print() {
 		for (Node node : nodes) {
-			if (node.getNext1()!=null) {
-				System.out.println(node.getNodeID()+"-"+node.getEdge1()+"->"+node.getNext1().getNodeID());
+			if (node.getNext1() != null) {
+				System.out.println(node.getNodeID() + "-" + node.getEdge1() + "->" + node.getNext1().getNodeID());
 			}
-			if (node.getNext2()!=null) {
-				System.out.println(node.getNodeID()+"-"+node.getEdge2()+"->"+node.getNext2().getNodeID());
+			if (node.getNext2() != null) {
+				System.out.println(node.getNodeID() + "-" + node.getEdge2() + "->" + node.getNext2().getNodeID());
 			}
 		}
 	}

@@ -33,12 +33,14 @@ public class NFABuilder {
 				NFA nfa = new NFA(c, controller);
 				nfaStack.push(nfa);
 			} else if (c == '\\') {
-
-				if (!alphabet.contains('.')) {
-					alphabet.add('.');
+				
+				char next = newRe.charAt(i+1);
+				
+				if (!alphabet.contains(next)) {
+					alphabet.add(next);
 				}
 
-				NFA nfa = new NFA('.', controller);
+				NFA nfa = new NFA(next, controller);
 				nfaStack.push(nfa);
 				i++;
 
