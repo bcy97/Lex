@@ -107,7 +107,7 @@ public class ReHandler {
 
 	public static boolean isChar(char a) {
 		if (a >= 'a' && a <= 'z' || a >= 'A' && a <= 'Z' || a == '_' || a == '-' || a == '=' || a == '+' || a == '/'
-				|| a == ';') {
+				|| a == ';' || a == '<' || a == '>' || a == '{' || a == '}'||a=='"') {
 			// if (a!='|'&&a!='*'&&a!='('&&a!=')'&&a!='\\'&&a!='.') {
 			return true;
 		}

@@ -32,23 +32,25 @@ public class LEX {
 		while (!string.equals("end")) {
 			boolean found = false;
 
-			// 先判断是否为保留字
+			// 先判断是否有保留字
 			DFA dfa = dfas.get("reserve");
-			// 从dfa的初状态开始
-			DFANode state = dfa.getStartNodes().get(0);
-			int i = 0;
-			for (i = 0; i < string.length(); i++) {
-				DFANode node = state.getNextDFA(string.charAt(i));
-				if (node != null) {
-					state = node;
-				} else {
-					break;
+			if (dfa != null) {
+				// 从dfa的初状态开始
+				DFANode state = dfa.getStartNodes().get(0);
+				int i = 0;
+				for (i = 0; i < string.length(); i++) {
+					DFANode node = state.getNextDFA(string.charAt(i));
+					if (node != null) {
+						state = node;
+					} else {
+						break;
+					}
 				}
-			}
-			if (i == string.length() && dfa.getEndNodes().contains(state)) {
-				System.out.println(string + " " + "reserve");
-				string = scanner.next();
-				continue;
+				if (i == string.length() && dfa.getEndNodes().contains(state)) {
+					System.out.println("Token{type='reserve', code='" + string + "', error='null'}");
+					string = scanner.next();
+					continue;
+				}
 			}
 
 			// 遍历所有的dfa，寻找匹配的dfa
@@ -61,8 +63,8 @@ public class LEX {
 				dfa = dfas.get(token);
 
 				// 从dfa的初状态开始
-				state = dfa.getStartNodes().get(0);
-				i = 0;
+				DFANode state = dfa.getStartNodes().get(0);
+				int i = 0;
 				for (i = 0; i < newString.length(); i++) {
 					DFANode node = state.getNextDFA(newString.charAt(i));
 					if (node != null) {
@@ -72,13 +74,14 @@ public class LEX {
 					}
 				}
 				if (i == string.length() && dfa.getEndNodes().contains(state)) {
-					System.out.println(string + " " + token);
+					// System.out.println(string + " " + token);
+					System.out.println("Token{type='" + token + "', code='" + string + "', error='null'}");
 					found = true;
 				}
 			}
 
 			if (!found) {
-				System.out.println(string + " null");
+				System.out.println("Token{type='null', code='" + string + "', error='null'}");
 			}
 
 			string = scanner.next();
