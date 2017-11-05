@@ -1,0 +1,6 @@
+reserve (public)|(int)|(void)|(class)|(private)|(for)|(if)|(else)|(while)|(do)|(double)|(char)|(new)|(return)
+letter (_|l)(l|d)*
+number ((-|d)(d*\.d*))|((-|d)(d*))
+operate =|\*|-|+|/|<|>|\.
+punctuation {|}|;|\(|\)|"|\,
+end

@@ -1,0 +1,14 @@
+int min ( int a , int b ) {
+    if ( a < b ) {
+        return a ;
+    } else {
+        return b ;
+    }
+}
+public static void main ( String [ ] arg0 ) {
+    int result = this . min ( 305 , 40 ) ;
+    result * = -2.7 ;
+    String classroom = " result " ;
+    classroom = result / ( -2. ) + " " ;
+    return 0 ;
+}
